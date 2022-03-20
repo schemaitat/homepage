@@ -4,6 +4,7 @@ pipeline{
     stages {
         stage('Build static HTML') {
 			steps{
+                sh "env | grep -i jenkins"
                 sh "rm -rf public"
                 sh "hugo"
 			}
