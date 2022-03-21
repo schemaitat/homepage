@@ -125,9 +125,9 @@ enableEmoji = true
           # URL of avatar shown in home page
           avatarURL = "/images/profile.jpg"
           # title shown in home page (HTML format is supported)
-          title = ""
+          title = "Dr. André Schemaitat"
           # subtitle shown in home page
-          subtitle = "Mathematics | Data Science | AML & CFT"
+          subtitle = "Mathematics | Data Science | AML & CFT</small>"
           # whether to use typeit animation for subtitle
           typeit = true
           # whether to show social links
@@ -229,9 +229,10 @@ enableEmoji = true
       # URL of the LOGO
       logo = ""
       # title name
-      name = "Dr. André Schemaitat"
+      name = "Home"
       # you can add extra information before the name (HTML format is supported), such as icons
-      #pre = "<i class='far fa-kiss-wink-heart fa-fw'></i>"
+      # pre = "<i class='far fa-kiss-wink-heart fa-fw'></i>"
+      # pre ="<i class='fa-solid fa-house'></i>"
       # you can add extra information after the name (HTML format is supported), such as icons
       post = ""
       # whether to use typeit animation for title name
@@ -241,7 +242,7 @@ enableEmoji = true
   [params.footer]
     enable = true
     # Custom content (HTML format is supported)
-    custom = ''
+    custom = 'Build from {{COMMIT}} on {{DATE}}.'
     # whether to show Hugo and theme info
     hugo = false
     # whether to show copyright info
