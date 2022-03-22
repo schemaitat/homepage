@@ -96,7 +96,7 @@ enableEmoji = true
       [languages.en.params.search]
         enable = true
         # type of search engine ("lunr", "algolia")
-        type = "algolia"
+        type = "lunr"
         # max index length of the chunked content
         contentLength = 4000
         # placeholder of the search bar
@@ -310,7 +310,7 @@ enableEmoji = true
       maxShownLines = 10
     # KaTeX mathematical formulas config (KaTeX https://katex.org/)
     [params.page.math]
-      enable = false
+      enable = true
       # default block delimiter is $$ ... $$ and \\[ ... \\]
       blockLeftDelimiter = ""
       blockRightDelimiter = ""

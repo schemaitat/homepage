@@ -1,33 +1,35 @@
 ---
 weight: 5
 title: "Hello, World !"
-date: 2021-11-14T17:55:28+08:00
-lastmod: 2021-11-14T17:55:28+08:00
-draft: true
+date: 2022-03-22T17:55:28+08:00
+draft: false
 author: "André"
 description: "First blog post."
-
+toc: false
 tags: ["hello world"]
 categories: ["general"]
 
 ---
 As part of my new webpage I decided to start a blog about things I find interesting, that I recently learned and my old and still active passion, mathematics.
 
-I will start off by giving an end-to-end tutorial on how to  set up a webpage like this using a Kubernetes cluster. Surely there are more ad hoc ways to do this, but as part of my new job I learned to love k8s and its magic. Hence, this growing project is a hobby and at the same time an excercise for me.
+I will start off by giving an end-to-end tutorial on how to  set up a webpage like this. 
 
- The main components of this setup are:
-> - a domain
-> - a git repo
-> - a kubernetes cluster
-> - a bunch of deployments and HELM charts
-> - a Load Balancer
-> - automation using Jenkins 
-> - a static website generator, in my case *hugo*.
+In the fury of trying the decentralize everything, I first did this whole setup in a small (three node) kubernetes cluster. 
 
-The goal is to have a running webpage, being automatically updated each time a push to the git repository happens.
+This method has surely its advantages:
+>- everyhing is yaml, hence easy to reproduce,
+>- during deployment no downtime due to k8s,
+>- load balancing is easy,
+>- fun to see all components interactig.
 
-Setting up this project assumes some basic knowledge about the Linux ecosystem, bash scripting, git, docker (images), kubernetes, HELM and networks.
+ However, after a short time, I realized that it is much cheaper and probably as quick to set up a webpage like this in a single tiny linux box. Acutally this one runs on a Cent OS VM with 1 CPU and 1 GB memory.
 
-<br>
+In the next post, I will show you how to do this with a static website generator. The main ingredients are 
 
-Watch out for the next post :smiley:
+>- a tiny bit of linux hacking,
+>- nginx as webserver,
+>- cert-manager for TLS encryption,
+>- hugo as static website generator,
+>- jenkins as automation tool.
+
+See you for the next post :grin:
