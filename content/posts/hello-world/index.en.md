@@ -14,7 +14,7 @@ As part of my new webpage I decided to start a blog about things I find interest
 
 I will start off by giving an end-to-end tutorial on how to  set up a webpage like this. 
 
-In the fury of trying the decentralize everything, I first did this whole setup in a small (three node) kubernetes cluster. 
+In the fury of trying to decentralize everything, I first did this whole setup in a small (three node) kubernetes cluster. 
 
 This method has surely its advantages:
 >- everyhing is yaml, hence easy to reproduce,
