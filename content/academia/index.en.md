@@ -1,7 +1,7 @@
 # Publications
 * **The Jiang-Su algebra is strongly self-absorbing revisited.** André Schemaitat. <br> [Journal of Functional Analysis](https://doi.org/10.1016/j.jfa.2021.109347) | [arXiv:1910.08383 [math.OA]](https://arxiv.org/abs/1910.08383)
 
-* **Algebraic K-theory and a semi-finite Fuglede-Kadison determinant.**  Peter Hochs, Jens Kaad, André Schemaitat. <br> [Annals of K-Theory 3-2 (2018), 193-206](https://msp.org/akt/2018/3-2/p02.xhtml") | [arXiv:1608.07395 [math.OA]](https://arxiv.org/abs/1608.07395)
+* **Algebraic K-theory and a semi-finite Fuglede-Kadison determinant.**  Peter Hochs, Jens Kaad, André Schemaitat. <br> [Annals of K-Theory 3-2 (2018), 193-206](https://msp.org/akt/2018/3-2/p02.xhtml) | [arXiv:1608.07395 [math.OA]](https://arxiv.org/abs/1608.07395)
 
 # Theses
 
