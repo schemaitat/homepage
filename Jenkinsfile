@@ -8,9 +8,8 @@ pipeline{
                     sed -i "s/{{COMMIT}}/${GIT_COMMIT:0:6}/g" config.toml
                     sed -i "s/{{DATE}}/$(date '+%A %e %B %Y')/g" config.toml
                 '''
-                sh "env"
                 sh "rm -rf public"
-                sh "hugo"
+                sh "hugo --cacheDir $HOME/hugo_cache"
 			}
 		}   
         stage("Update HTML"){
