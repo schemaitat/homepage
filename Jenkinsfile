@@ -2,6 +2,11 @@ pipeline{
     agent any
 
     stages {
+        stage('Install submodules'){
+            steps{
+                sh "git submodule update --init --recursive"
+            }
+        }
         stage('Build static HTML') {
 			steps{
                 sh'''#!/bin/bash
