@@ -113,10 +113,10 @@ Now, we should be able to see our homepage, more precisely the nginx example pag
 Check out the [hugo](https://gohugo.io/) website.
 
 ```bash
-    # download hugo prebuilt binary
+    # download hugo (extended) prebuilt binary
     cd
-    wget https://github.com/gohugoio/hugo/releases/download/v0.98.0/hugo_0.98.0_Linux-64bit.tar.gz 
-    tar -xzf hugo_0.98.0_Linux-64bit.tar.gz
+    wget https://github.com/gohugoio/hugo/releases/download/v0.98.0/hugo_extended_0.98.0_Linux-64bit.tar.gz 
+    tar -xzf hugo_extended_0.98.0_Linux-64bit.tar.gz
     chmod a+x hugo
     # move the binary to a location which is in $PATH
     mv hugo /usr/local/bin

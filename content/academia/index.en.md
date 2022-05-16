@@ -15,9 +15,10 @@
 * [Non-unital Arveson theorem](PDF/arveson-non-unital.pdf)
 * [Rokhlin actions and permanence properties](PDF/crossed-products-seminar.pdf)
 * [On certain strongly self-absorbing C*-algebras](PDF/SSA.pdf) 
+
   {{<admonition>}}
   In this text we try to give a first idea how to solve (if at all true) the following problem: If two (stably finite) strongly self-absorbing C*-algebras embed non-unitally into each other, then they are isomorphic.
-  {{</admonition>}}
+  {{</ admonition>}}
 
 # Talks
 
