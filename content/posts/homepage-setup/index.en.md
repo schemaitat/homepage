@@ -2,7 +2,7 @@
 weight: 5
 title: "Setting up a static homepage."
 date: 2022-03-22T17:55:28+08:00
-draft: false
+draft: true
 author: "André"
 description: "First blog post."
 toc: true
