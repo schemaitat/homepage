@@ -238,16 +238,24 @@ pipeline{
 
 Next, we set up a webhook for our git repository. Each time a push happens to the repo we want to start the jenkins pipeline. That fully automates the build and deployment process.
 
-The jenkins webhook is `http://your-domain:8080/github-webhook/`. The webhook can be defined in the settings of your source repository.
+In the jenkins plugins section, we first install the following plugin:
 
-![webhook](webhook.png)
+![multibranch-webhook-plugin](multibranch-webhook-plugin.png)
 
-Finally, we create a new jenkins pipeline. First, create an element and select multibranch pipeline.
+Next, we create a new jenkins pipeline. First, create an element and select multibranch pipeline.
 
 ![jenins-1](jenkins-1.png)
 
-Next, select **Git** as branch source and provide the source repository for your hugo project and credentilas if needed.
+Now, select **Git** as branch source and provide the source repository for your hugo project and credentilas if needed.
 
 ![jenins-2](jenkins-2.png)
 
-After having saved the pipeline the first build starts.
+Finally, select *Scan by webhook* in the settings and make sure to use a secret token:
+
+![pipeline-setup](pipeline-setup.png)
+
+Finally, create the webhook in GitHub. The URL has to look like 
+
+>http://your-domain:8080/multibranch-webhook-trigger/invoke?token=your-token
+
+After having saved the pipeline the first build starts and every time you push new commits to the repo.
