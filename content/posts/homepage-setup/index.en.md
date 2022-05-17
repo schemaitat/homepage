@@ -10,14 +10,24 @@ tags: ["jenkins","nginx","hugo","tutorial","homepage"]
 categories: ["tutorial", "webserver"]
 
 ---
-In this article, we go through the basic steps to create your fully customizable homepage using nginx, jenkins and hugo.
+In this article, we go through the basic steps to create a fully customizable homepage using nginx, jenkins and hugo.
 <!--more-->
+
+{{< admonition note>}}
+To goal is to have a working webpage at the end of this tutorial. On this way you will hopefully learn about:
+
+- linux (bash, installing software, privileges, services)
+- networks and firewalls
+- dns 
+- automation
+
+{{< /admonition>}}
 
 ## The host
 
 ### Setup
 
-First, we need a server with a public ip address. Which vendor exactly you choose doesn't matter for this tutorial.
+First, we need a server with a public IP address. Which vendor you choose doesn't matter for this tutorial.
 
 {{< admonition tip>}}
 I prefer [linode](https://www.linode.com/) over other well-known providers. The setup is easy and focuses only on the information you need. For this tutorial, I created a *nanonode* with 1 CPU and 1 Gi memory.
@@ -26,7 +36,7 @@ Independent of usage this one node costs 5$ per month and is all we need.
 {{< /admonition>}}
 
 {{< admonition>}} 
-    As an operating system I chose CentOS, as it is well-known for its reliability and security.
+As an operating system I chose CentOS, as it is well-known for its reliability and security.
 {{< /admonition>}}
 
 
@@ -92,24 +102,31 @@ It may take up to 24h for the change to be active.
 Next, we install a webserver called nginx, which hosts the homepage. Check out the [nginx](https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-source/) website for more details.
 
 ```bash
-    yum install epel-release
-    yum update
-    yum install nginx
-    # start service at reboot
-    systemctl enable nginx
-    # start service
-    systemctl start nginx
-    # check status
-    systemctl status nginx
+yum install epel-release
+yum update
+yum install nginx
+# start service at reboot
+systemctl enable nginx
+# start service
+systemctl start nginx
+# check status
+systemctl status nginx
 ```
 
-Since we want to use jenkins to build the static HTML and copy it to a destination from which nginx serves our homepage we have to grant permissions. We use the standard folder and a 
+Since we want to use jenkins to build the static HTML and copy it to a destination from which nginx serves our homepage we have to grant the jenkins user permissions. We use the standard folder and a 
 ```bash
 chmod -R jenkins:0 /usr/share/nginx/html
 ```
 to change ownership of the standard folder.
 
-At this point, we should already have a working webpage, which is accessible at http://your-domain, i.e. on port 80. In the next section, we will add TLS encryption to make the website secure and accessible via https.
+{{< admonition note>}}
+In Linux everything is a file. To find out details about locally installed users, you can do
+```bash
+cat /etc/passwd
+```
+{{< /admonition>}}
+
+At this point, we should already have a working webpage, which is accessible at http://your-domain, i.e. on the standard http port 80. In the next section, we will add TLS encryption to make the website secure and accessible via https on port 443.
 
 ### certbot
 
@@ -136,26 +153,26 @@ If you don't know the `EOF`notation, I recommend having a look at *heredocs*.
 Now we will install *certbot*. If you are running another OS [this](https://certbot.eff.org/instructions?ws=nginx&os=centosrhel8) website is very useful to determine the correct installation method. For CentOS 8 we have to do the following:
 
 ```bash
-    # install snapd
-    yum install snapd
-    systemctl enable --now snapd.socket
-    ln -s /var/lib/snapd/snap /snap
-    reboot
-    # install certbot
-    snap install core
-    snap refresh core
-    snap install --classic certbot
-    ln -s /snap/bin/certbot /usr/bin/certbot
-    # modify our nginx configuration file
-    certbot --nginx
-    nginx -t && nginx -s reload
+# install snapd
+yum install snapd
+systemctl enable --now snapd.socket
+ln -s /var/lib/snapd/snap /snap
+reboot
+# install certbot
+snap install core
+snap refresh core
+snap install --classic certbot
+ln -s /snap/bin/certbot /usr/bin/certbot
+# modify our nginx configuration file
+certbot --nginx
+nginx -t && nginx -s reload
 ```
 
 The output should look something like this:
 
 ![nginx-confg](nginx-conf.png)
 
-Now, we should be able to see our homepage, more precisely the nginx example page, being served at https://your-domain.
+Now, we can see our homepage, more precisely the nginx example page, being served at https://your-domain.
 
 Finally, we want to automatically renew our certificates (which become invalid after 90 days). To this end, we add a cron job. Run `crontab -e` and add 
 
@@ -168,17 +185,17 @@ Finally, we want to automatically renew our certificates (which become invalid a
 Hugo is a static website generator. You only work with configuration files and markup language. No database is needed to build the final HTML for your homepage. Check out the [hugo](https://gohugo.io/) website for more information. To install hugo, we do the following:
 
 ```bash
-    # download hugo (extended) prebuilt binary
-    cd /tmp
-    wget https://github.com/gohugoio/hugo/releases/download/v0.98.0/hugo_extended_0.98.0_Linux-64bit.tar.gz 
-    tar -xzf hugo_extended_0.98.0_Linux-64bit.tar.gz
-    chmod a+x hugo
-    # move the binary to a location which is in $PATH
-    mv hugo /usr/local/bin
-    # cleanup
-    rm hugo_extended_0.98.0_Linux-64bit.tar.gz
-    # verify that hugo is executable
-    which hugo
+# download hugo (extended) prebuilt binary
+cd /tmp
+wget https://github.com/gohugoio/hugo/releases/download/v0.98.0/hugo_extended_0.98.0_Linux-64bit.tar.gz 
+tar -xzf hugo_extended_0.98.0_Linux-64bit.tar.gz
+chmod a+x hugo
+# move the binary to a location which is in $PATH
+mv hugo /usr/local/bin
+# cleanup
+rm hugo_extended_0.98.0_Linux-64bit.tar.gz
+# verify that hugo is executable
+which hugo
 ```
 
 {{< admonition tip>}}
@@ -189,19 +206,19 @@ Make sure to download the latest (extended) hugo release.
 
 Finally, we install jenkins. This tool is widely used for automation tasks and is fully customizable. However, our first job will be very simple. Jenkins clones the git repo with our hugo sources and builds the static HTML from it. 
 
-Check out the [Jenkins](https://www.jenkins.io/doc/book/installing/linux/#red-hat-centos) install page for Cent-OS.
+Check out the [Jenkins](https://www.jenkins.io/doc/book/installing/linux/#red-hat-centos) install page for CentOS.
 
 ```bash
-    sudo wget -O /etc/yum.repos.d/jenkins.repo \
-        https://pkg.jenkins.io/redhat/jenkins.repo
-    sudo rpm --import https://pkg.jenkins.io/redhat/jenkins.io.key
-    sudo yum upgrade
-    # Add required dependencies for the jenkins package
-    sudo yum install java-11-openjdk
-    sudo yum install jenkins
-    # start jenkins service on start-up
-    sudo systemctl enable jenkins
-    sudo reboot
+wget -O /etc/yum.repos.d/jenkins.repo \
+    https://pkg.jenkins.io/redhat/jenkins.repo
+rpm --import https://pkg.jenkins.io/redhat/jenkins.io.key
+yum upgrade
+# Add required dependencies for the jenkins package
+yum install java-11-openjdk
+yum install jenkins
+# start jenkins service on start-up
+systemctl enable jenkins
+reboot
 ```
 
 After reboot you can check the status of the service with `systemctl status jenkins`. The output shoud look like this: 
@@ -212,7 +229,7 @@ From the output you can extract the initial admin password, which you should cha
 
 ## Jenkins pipeline
 
-In our source repository we put a *Jenkinsfile*, wich defines the pipeline that should be executed. The idea ist to first build the static html with hugo and then copy the output to our root destination for nginx. This is an example for a very basic Jenkinsfile:
+In our source repository we put a *Jenkinsfile*, wich defines the pipeline that should be executed. The idea ist to first build the static HTML with hugo and then copy the output to our root destination for nginx. This is an example for a very basic Jenkinsfile:
 ```jenkinsfile
 pipeline{
     agent any
@@ -250,7 +267,7 @@ Now, select **Git** as branch source and provide the source repository for your 
 
 ![jenins-2](jenkins-2.png)
 
-Finally, select *Scan by webhook* in the settings and make sure to use a secret token:
+Select *Scan by webhook* in the settings and make sure to use a secret token:
 
 ![pipeline-setup](pipeline-setup.png)
 
