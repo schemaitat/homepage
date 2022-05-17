@@ -238,7 +238,7 @@ pipeline{
 
 Next, we set up a webhook for our git repository. Each time a push happens to the repo we want to start the jenkins pipeline. That fully automates the build and deployment process.
 
-The jenkins webhook is `http://your-domain:8080/github-webhook/`. The webhook can be defined in the settings of your source repository:
+The jenkins webhook is `http://your-domain:8080/github-webhook/`. The webhook can be defined in the settings of your source repository.
 
 ![webhook](webhook.png)
 
