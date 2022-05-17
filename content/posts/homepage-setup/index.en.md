@@ -6,8 +6,8 @@ draft: false
 author: "André"
 description: "How to build a homepage from scratch."
 toc: true
-tags: ["jenkins nginx hugo tutorial homepage"]
-categories: ["tutorial"]
+tags: ["jenkins","nginx","hugo","tutorial","homepage"]
+categories: ["tutorial", "webserver"]
 
 ---
 In this article, we go through the basic steps to create your fully customizable homepage using nginx, jenkins and hugo.
