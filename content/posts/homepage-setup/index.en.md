@@ -14,7 +14,7 @@ In this article, we go through the basic steps to create a fully customizable ho
 <!--more-->
 
 {{< admonition note>}}
-To goal is to have a working webpage at the end of this tutorial. On this way you will hopefully learn about:
+The goal is to have a working webpage at the end of this tutorial. Along the way you will hopefully learn about:
 
 - linux (bash, installing software, privileges, services)
 - networks and firewalls
@@ -27,7 +27,7 @@ To goal is to have a working webpage at the end of this tutorial. On this way yo
 
 ### Setup
 
-First, we need a server with a public IP address. Which vendor you choose doesn't matter for this tutorial.
+First, we need a server with a public IP address. It doesn't matter which vendor you choose for this tutorial.
 
 {{< admonition tip>}}
 I prefer [linode](https://www.linode.com/) over other well-known providers. The setup is easy and focuses only on the information you need. For this tutorial, I created a *nanonode* with 1 CPU and 1 Gi memory.
