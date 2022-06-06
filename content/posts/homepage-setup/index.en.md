@@ -229,7 +229,7 @@ From the output you can extract the initial admin password, which you should cha
 
 ## Jenkins pipeline
 
-In our source repository we put a *Jenkinsfile*, wich defines the pipeline that should be executed. The idea ist to first build the static HTML with hugo and then copy the output to our root destination for nginx. This is an example for a very basic Jenkinsfile:
+In our source repository we put a *Jenkinsfile*, wich defines the pipeline that should be executed. The idea ist to first build the static HTML with hugo and then copy the output to our root destination for nginx. This is an example of a very basic Jenkinsfile:
 ```jenkinsfile
 pipeline{
     agent any
@@ -275,4 +275,4 @@ Finally, create the webhook in GitHub. The URL has to look like
 
 >http://your-domain:8080/multibranch-webhook-trigger/invoke?token=your-token
 
-After having saved the pipeline the first build starts and every time you push new commits to the repo.
+After having saved the pipeline the first build starts and every time you push new commits to the repo the website is updated.
