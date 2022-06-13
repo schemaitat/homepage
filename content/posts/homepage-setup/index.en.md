@@ -263,7 +263,7 @@ Next, we create a new jenkins pipeline. First, create an element and select mult
 
 ![jenins-1](jenkins-1.png)
 
-Now, select **Git** as branch source and provide the source repository for your hugo project and credentilas if needed.
+Now, select **Git** as branch source, provide the source repository for your hugo project and credentilas if needed.
 
 ![jenins-2](jenkins-2.png)
 
