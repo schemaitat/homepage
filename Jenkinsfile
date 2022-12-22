@@ -30,7 +30,7 @@ pipeline{
                 echo "Didn't find global hugo version with the required version $RELEASE."
                 echo "Hence, using wget to install a local relase."
                 wget https://github.com/gohugoio/hugo/releases/download/v${RELEASE}/hugo_extended_${RELEASE}_Linux-64bit.tar.gz
-                tar -xzf hugo_${RELEASE}_Linux-64bit.tar.gz
+                tar -xzf hugo_extended_${RELEASE}_Linux-64bit.tar.gz
                 chmod +x ./hugo
                 echo "Done."
             fi
