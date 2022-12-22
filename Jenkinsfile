@@ -10,7 +10,11 @@ pipeline{
     stages {
         stage('Install submodules'){
             steps{
-                sh "git submodule update --init --recursive"
+                sh'''#!/bin/bash
+                git submodule update --init --recursive
+                cd themes/LoveIt && git checkout master
+                cd -
+                '''
             }
         }
 
