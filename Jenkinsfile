@@ -20,7 +20,7 @@ pipeline{
             if [ $? -ne 0 ]; then
                 LOCAL_HUGO_INSTALL=true
             else
-                hugo version | grep $RELEASE
+                hugo version | grep "${RELEASE}+extended"
                 if [ $? -ne 0 ]; then
                     LOCAL_HUGO_INSTALL=true
                 fi
@@ -29,7 +29,7 @@ pipeline{
             if [ "$LOCAL_HUGO_INSTALL" = "true" ]; then
                 echo "Didn't find global hugo version with the required version $RELEASE."
                 echo "Hence, using wget to install a local relase."
-                wget https://github.com/gohugoio/hugo/releases/download/v${RELEASE}/hugo_${RELEASE}_Linux-64bit.tar.gz
+                wget https://github.com/gohugoio/hugo/releases/download/v${RELEASE}/hugo_extended_${RELEASE}_Linux-64bit.tar.gz
                 tar -xzf hugo_${RELEASE}_Linux-64bit.tar.gz
                 chmod +x ./hugo
                 echo "Done."
