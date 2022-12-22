@@ -19,6 +19,10 @@ $$
   \gdef\norm#1{\left\lVert#1\right\rVert}
 $$
 
+{{< raw >}}
+\[ a=b+c \\ d+e=f \]
+{{< /raw >}}
+
 {{< admonition type=note title="Definition" >}}
 {{< raw >}}
 {{< /raw >}}
