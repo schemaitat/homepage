@@ -4,7 +4,7 @@ pipeline{
     environment{
         // look at local installation of hugo first if a 
         // installation with the wrong version exists
-        PATH=${WORKSPACE}:${PATH}
+        PATH="${WORKSPACE}:${PATH}"
     }
 
     stages {
