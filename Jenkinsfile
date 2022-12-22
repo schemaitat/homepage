@@ -8,34 +8,39 @@ pipeline{
     }
 
     stages {
+        stage('Update submodules') {
+		    steps{
+			    sh "git submodule update --init --recursive"
+		    }
+	    }   
     	stage('Install hugo'){
-		steps{
-			sh'''#!/bin/bash
-            set -x
-            RELEASE=0.108.0
-            # check if hugo is installed with the correct version
-            LOCAL_HUGO_INSTALL=false
+		    steps{
+			    sh'''#!/bin/bash
+                set -x
+                RELEASE=0.108.0
+                # check if hugo is installed with the correct version
+                LOCAL_HUGO_INSTALL=false
 
-            which hugo
-            if [ $? -ne 0 ]; then
-                LOCAL_HUGO_INSTALL=true
-            else
-                hugo version | grep "${RELEASE}+extended"
+                which hugo
                 if [ $? -ne 0 ]; then
                     LOCAL_HUGO_INSTALL=true
+                else
+                    hugo version | grep "${RELEASE}+extended"
+                    if [ $? -ne 0 ]; then
+                        LOCAL_HUGO_INSTALL=true
+                    fi
                 fi
-            fi
 
-            if [ "$LOCAL_HUGO_INSTALL" = "true" ]; then
-                echo "Didn't find global hugo version with the required version $RELEASE."
-                echo "Hence, using wget to install a local relase."
-                wget https://github.com/gohugoio/hugo/releases/download/v${RELEASE}/hugo_extended_${RELEASE}_Linux-64bit.tar.gz
-                tar -xzf hugo_extended_${RELEASE}_Linux-64bit.tar.gz
-                chmod +x ./hugo
-                echo "Done."
-            fi
-			'''
-		}
+                if [ "$LOCAL_HUGO_INSTALL" = "true" ]; then
+                    echo "Didn't find global hugo version with the required version $RELEASE."
+                    echo "Hence, using wget to install a local relase."
+                    wget https://github.com/gohugoio/hugo/releases/download/v${RELEASE}/hugo_extended_${RELEASE}_Linux-64bit.tar.gz
+                    tar -xzf hugo_extended_${RELEASE}_Linux-64bit.tar.gz
+                    chmod +x ./hugo
+                    echo "Done."
+                fi
+			    '''
+		    }
     	}
         stage('Build static HTML') {
 		    steps{
