@@ -12,8 +12,6 @@ pipeline{
             steps{
                 sh'''#!/bin/bash
                 git submodule update --init --recursive
-                cd themes/LoveIt && git checkout master
-                cd -
                 '''
             }
         }
