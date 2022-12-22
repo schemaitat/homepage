@@ -8,14 +8,6 @@ pipeline{
     }
 
     stages {
-        stage('Install submodules'){
-            steps{
-                sh'''#!/bin/bash
-                git submodule update --init --recursive
-                '''
-            }
-        }
-
     	stage('Install hugo'){
 		steps{
 			sh'''#!/bin/bash
