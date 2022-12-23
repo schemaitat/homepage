@@ -1,33 +1,36 @@
 ---
 weight: 5
-title: "k8s website (Part 1): Overview and setup of a k8s cluster"
+title: "kubernetes basics"
 date: 2021-11-21T13:04:28+08:00
 lastmod: 2021-11-21T13:04:28+08:00
-draft: true
+draft: false
 author: "André"
-description: "An introduction on setting up a k8s cluster."
+description: "An introduction to kubernetes."
 
 tags: ["k8s", "kubernetes", "cluster", "deployment", "nginx", "linode" ]
-categories: ["cloud", "k8s"]
-typora-root-url: ../k8s-cluster
+categories: ["cloud", "kubernetes"]
 ---
-## introduction
+# Introduction
 
-In this post, I show you how to set up a Kubernetes cluster with [Linode](https://www.linode.com/). Furthermore, we deploy a dummy web app to that cluster. In later posts, we add more deployments and see how they interact. 
+In this post, we will set up a Kubernetes cluster with [Linode](https://www.linode.com/) and deploy a dummpy webpage.
+Linode is still the most transparent and user-friendly vendor I know of.
 
-I assume some basic knowledge of Kubernetes and the kubectl CLI. If you want to learn about Kubernetes, I can recommend the [kubernetes 101](https://kube101.jeffgeerling.com/) tutorial by Jeff Geerling, who also introduced me to Linode, a, at least in Germany, pretty unknown cloud provider. 
+If you want to learn more about Kubernetes, I can recommend the [kubernetes 101](https://kube101.jeffgeerling.com/) tutorial by Jeff Geerling.
 
-Yet, for me, Linode is still the most transparent and user-friendly vendor I know of.
 
-In a later post, I will show you how to make the core components of the k8s cluster publicly available.
+In another post, we will have a look at more advanced deplyoments like the one shown below, consisting of a basic setup to build and deploy a webpage. The main components would be 
 
-## overview
+- ingress (used together with an external load balancer)
+- docker registry (image registry)
+- jenkins (build pipeline)
+- cert manager (TLS encryption)
+- nginx server (webpage)
 
 {{< image src="k8s-overview.png" caption="Create the cluster (2)" >}}
 
-## kubectl
+# kubectl
 
-For this post, I show all steps for macOS executed in *zsh*. For other systems have a look at [https://kubernetes.io/docs/tasks/tools/](https://kubernetes.io/docs/tasks/tools/). 
+For this post, I show all steps for macOS executed in *zsh*. For other operating systems have a look at [https://kubernetes.io/docs/tasks/tools/](https://kubernetes.io/docs/tasks/tools/). 
 
 First, check if kubectl is already installed.
 
@@ -56,7 +59,7 @@ You can also move the binary to any other place as long as the absolute path of 
 
 You can verify the installation by typing `kubectl version`. 
 
-To ease your life, we use an alias for kubectl and enable autocompletion. If you use a *zsh* terminal, don't forget to append the following to your `.zshrc` file.
+To ease your life, we use an alias for kubectl and enable autocompletion. If you use a *zsh* terminal, don't forget to append autocompletion to your `.zshrc` file.
 
 ```bash
 alias k="kubectl"

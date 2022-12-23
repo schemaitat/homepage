@@ -9,13 +9,13 @@ pipeline{
 
     stages {
         stage('Update submodules') {
-		    steps{
-			    sh "git submodule update --init --recursive"
-		    }
-	    }   
-    	stage('Install hugo'){
-		    steps{
-			    sh'''#!/bin/bash
+            steps{
+                sh "git submodule update --init --recursive"
+            }
+        }   
+        stage('Install hugo'){
+            steps{
+                sh'''#!/bin/bash
                 set -x
                 RELEASE=0.108.0
                 # check if hugo is installed with the correct version
@@ -39,25 +39,25 @@ pipeline{
                     chmod +x ./hugo
                     echo "Done."
                 fi
-			    '''
-		    }
-    	}
+                '''
+            }
+        }
         stage('Build static HTML') {
-		    steps{
-			    sh'''#!/bin/bash
+            steps{
+                sh'''#!/bin/bash
                 set -x
                 sed -i "s/{{COMMIT}}/${GIT_COMMIT:0:6}/g" config.toml
                 sed -i "s/{{DATE}}/$(date '+%A %e %B %Y')/g" config.toml
                 '''
                 sh "rm -rf public"
-			    sh "hugo --cacheDir $HOME/hugo_cache"
-		    }
-	    }   
+                sh "hugo --cacheDir $HOME/hugo_cache"
+            }
+        }   
         stage("Update HTML"){
-    		steps{
+            steps{
                 sh'''#!/bin/bash
                 set -x
-			    rm -rf /usr/share/nginx/html/*
+                rm -rf /usr/share/nginx/html/*
                 cp -r public/* /usr/share/nginx/html
                 if [ -f $(pwd)/hugo ]; then
                     rm -rf ./hugo*
