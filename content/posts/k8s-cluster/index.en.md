@@ -1,8 +1,8 @@
 ---
 weight: 5
 title: "kubernetes basics"
-date: 2021-11-21T13:04:28+08:00
-lastmod: 2021-11-21T13:04:28+08:00
+date: 2022-12-24T13:04:28+08:00
+lastmod: 2022-12-24T13:04:28+08:00
 draft: false
 author: "André"
 description: "An introduction to kubernetes."
@@ -10,27 +10,15 @@ description: "An introduction to kubernetes."
 tags: ["k8s", "kubernetes", "cluster", "deployment", "nginx", "linode" ]
 categories: ["cloud", "kubernetes"]
 ---
-# Introduction
+# introduction
 
 In this post, we will set up a Kubernetes cluster with [Linode](https://www.linode.com/) and deploy a dummpy webpage.
-Linode is still the most transparent and user-friendly vendor I know of.
 
-If you want to learn more about Kubernetes, I can recommend the [kubernetes 101](https://kube101.jeffgeerling.com/) tutorial by Jeff Geerling.
-
-
-In another post, we will have a look at more advanced deplyoments like the one shown below, consisting of a basic setup to build and deploy a webpage. The main components would be 
-
-- ingress (used together with an external load balancer)
-- docker registry (image registry)
-- jenkins (build pipeline)
-- cert manager (TLS encryption)
-- nginx server (webpage)
-
-{{< image src="k8s-overview.png" caption="Create the cluster (2)" >}}
+If you want to learn more about Kubernetes, I can recommend the [kubernetes 101](https://kube101.jeffgeerling.com/) tutorial by {{< person url="https://www.jeffgeerling.com/" name="Jeff Geerling" picture="https://www.jeffgeerling.com/sites/default/files/files/jeff-2018.jpg" >}}.
 
 # kubectl
 
-For this post, I show all steps for macOS executed in *zsh*. For other operating systems have a look at [https://kubernetes.io/docs/tasks/tools/](https://kubernetes.io/docs/tasks/tools/). 
+The steps below are executed on macOS in *zsh*. For other operating systems have a look at [https://kubernetes.io/docs/tasks/tools/](https://kubernetes.io/docs/tasks/tools/). 
 
 First, check if kubectl is already installed.
 
@@ -42,24 +30,23 @@ if command kubectl &> /dev/null; then
 fi
 ```
 
-If that is the case you are ready to go. Otherwise, let us download the latest binary.
+If that is the case you are ready to go. However, check for updates.
+Otherwise, let us download the latest binary.
 
 ```bash
 cd
 # rel can by any other valid release
-rel=$(curl -L -s https://dl.k8s.io/release/stable.txt)
-curl -LO "https://dl.k8s.io/release/${rel}/bin/darwin/amd64/kubectl"
-# make the binary executable
-chmod +x ./kubectl
-# move to standard directory
-sudo mv ./kubectl /usr/local/bin/kubectl
+REL=$(curl -L -s https://dl.k8s.io/release/stable.txt)
+curl -LO "https://dl.k8s.io/release/${REL}/bin/darwin/amd64/kubectl"
+sudo chmod +x kubectl
+sudo mv kubectl /usr/local/bin
 ```
 
 You can also move the binary to any other place as long as the absolute path of the base directory appears in the environment variable `$PATH`. As always, to persist changes like `export PATH=$PATH:/path/to/kubectl`, make sure to add that to your `.zshrc`.
 
 You can verify the installation by typing `kubectl version`. 
 
-To ease your life, we use an alias for kubectl and enable autocompletion. If you use a *zsh* terminal, don't forget to append autocompletion to your `.zshrc` file.
+To ease your life, we use an alias for kubectl and enable autocompletion. Add this to your `.zshrc`:
 
 ```bash
 alias k="kubectl"
@@ -67,13 +54,12 @@ complete -F __start_kubectl k
 source <(kubectl completion zsh)
 ```
 
-The change takes effect after your .zshrc has been sourced. 
+The change takes effect after your `.zshrc` has been sourced. 
 
 
-## the cluster
+# the cluster
 
-As already mentioned, I prefer Linode as Cloud Provider. However, you are free to choose another one, since the goal is to have a running Kubernetes cluster.
-
+As already mentioned, I prefer Linode as cloud provider. 
 If you don't already have a Linode account, go to [Linode](https://www.linode.com/) and register. Once you are logged in, choose "Kubernetes" on the left panel and click "Create Cluster".
 
 <br>
@@ -89,7 +75,7 @@ For the tutorial, I chose two Linodes with Shared CPU and 2 GB memory. However, 
 <br>
 
 {{< admonition info >}}
-Linode's billing is fully transparent. Each active resource like a node, a Load Balancer or a PVC costs a fixed amount per month, independent of its utilization. That makes your bill entirely predictable.
+Linode's billing is fully transparent. Each active resource like a node, a Load Balancer or a PVC costs a fixed amount per month, independent of usage. That makes your bill entirely predictable.
 {{< /admonition >}}
 
 While the nodes are starting up, you can already download the cluster specific `kubeconfig.yaml`.
@@ -98,22 +84,23 @@ While the nodes are starting up, you can already download the cluster specific `
 {{< image style="padding: 5em" src="k8s-3.png" caption="Create the cluster (3)" >}}
 <br>
 
-To make the kubeconfig available to kubectl, the `$KUBECONFIG` variable is used. I like to have my kubeconfig at `~/kubeconfig.yaml` and have accordingly added `export KUBECONFIG=~/kubeconfig.yaml` to my `.zshrc`. 
+To make the kubeconfig available to kubectl, the `$KUBECONFIG` variable is used.
+The default location is `~/kubeconfig.yaml`. Make sure to add the variable to your `.zshrc`:
+```bash
+echo "export KUBECONFIG=~/kubeconfig.yaml" >> ~/.zshrc
+```
 
 {{< admonition info >}}
-Also, make sure to set permissions. Anyone with the kubeconfig file has full access to the cluster.
-{{< /admonition >}}
-
-Set the permissions to 0400 (which I usually cannot remember). Instead, I always use the following, which is much easier to remember.
-
+Also, make sure to set permissions. Anyone with the kubeconfig file has full access to the cluster. This is done with 
 ```bash
-chmod a-rwx $KUBECONFIG
-chmod u+r $KUBECONFIG
+chmod 400 ~/kubeconfig.yaml
 ```
+That gives the owner read permissions to the `kubeconfig.yaml`.
+{{< /admonition >}}
 
 If everything went as expected, you can verify the setup by typing `k get nodes`. The output should show all nodes in your cluster. 
 
-## a toy web app
+# a toy web app
 
 Our first deployment will be a toy web application running on an Nginx webserver. Later, we will refine this deployment to host our *productive* website.
 
@@ -217,6 +204,4 @@ IP=$(k get nodes -o json | jq '.items[0].status.addresses | .[] | select(.type =
 You can then check if the service works by curling `$IP:31100`.
 
 
-I hope you got a first impression of how Kubernetes works and how to apply deployments.
-
-See you for the next post :smiley:
+I hope you got a first impression of how kubernetes works and how to apply deployments.
