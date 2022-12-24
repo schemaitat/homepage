@@ -127,7 +127,7 @@ enableEmoji = true
           # title shown in home page (HTML format is supported)
           title = "Dr. André Schemaitat"
           # subtitle shown in home page
-          subtitle = "Mathematics | Data Science | AML & CFT</small>"
+          subtitle = "Mathematics | Data Science | Cloud</small>"
           # whether to use typeit animation for subtitle
           typeit = true
           # whether to show social links
