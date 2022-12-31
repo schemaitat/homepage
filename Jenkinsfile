@@ -59,7 +59,7 @@ pipeline{
                 set -x
                 rm -rf /usr/share/nginx/html/*
                 cp -r public/* /usr/share/nginx/html
-                if [ -f $(pwd)/hugo ]; then
+                if [ -f ${WORKSPACE}/hugo ]; then
                     rm -rf ./hugo*
                 fi
                 '''
