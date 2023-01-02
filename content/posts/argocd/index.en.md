@@ -13,7 +13,7 @@ categories: ["tutorial", "kubernetes", "dev-ops"]
 
 {{< admonition abstract >}}
 **Things you get**
-- A running kubernetes cluster with any deplyoment (yaml, helm, kustomize) you want in less than 5 minutes.
+- A running kubernetes cluster with any deployment (yaml, helm, kustomize) you want in less than 5 minutes.
 - Easy tear down of the cluster (when you don't need it) to save costs.
 - Reproducibility and idempotency of the create and delete steps.
 
