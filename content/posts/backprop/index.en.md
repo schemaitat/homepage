@@ -200,13 +200,13 @@ $$
 We first look at the last layer.
 \begin{align*}
     \frac{\partial C(N,x,\hat x)}{\partial W^{(N)}_{i,j}} 
-    & = \sum_{l=1}^N \frac{\partial C(N, x, \hat x)}{\partial z^{(N)}_l} \frac{\partial z^{(N)}_l}{\partial W^{(N)}_{i,j}}
+    & = \sum_{l=1}^{m_N} \frac{\partial C(N, x, \hat x)}{\partial z^{(N)}_l} \frac{\partial z^{(N)}_l}{\partial W^{(N)}_{i,j}}
 \end{align*}
 Let us first compute the first factor in the sum:
 \begin{align*}
-  \frac{\partial C(N,x,\hat x)}{\partial z^{(N)}_l} & = \frac \partial {\partial z^{(N)}_l} \norm{\sigma(z^{(N)}) - \hat x}^2 \\
-  & = 2 (\sigma(z^{(N)}_l) - \hat x_l) \sigma'(z^{(N)}_l) \\
-  & = 2(a^{(N)}_l - \hat x_l) \sigma'(z^{(N)}_l)
+  \frac{\partial C(N,x,\hat x)}{\partial z^{(N)}_l} & = \frac 1 {m_N}  \frac \partial {\partial z^{(N)}_l} \norm{\sigma(z^{(N)}) - \hat x}^2 \\
+  & = \frac 2 {m_N} (\sigma(z^{(N)}_l) - \hat x_l) \sigma'(z^{(N)}_l) \\
+  & = \frac 2 {m_N} (a^{(N)}_l - \hat x_l) \sigma'(z^{(N)}_l)
 \end{align*}
 Note that we use that the squared norm function, denote it by 
 $$
@@ -216,4 +216,13 @@ $$
  $$
   D_x n = \nabla_x n = \left ( \frac {\partial n} {\partial x_1} \cdots \frac{\partial n}{\partial x_n} \right )_x = 2x^t.
  $$
+ The second factor is 
+ \begin{align*}
+ \frac {\partial z_l^{(N)}}{\partial W_{i,j}^{(N)}} & =  \frac \partial {\partial W_{i,j}^{(N)}} = \frac \partial {\partial W_{i,j}^{(N)}} \sum_r W_{l,r}^{(N)} a_r^{(N-1)} \\
+ &= \delta_{i,l} a_j^{(N-1)}
+ \end{align*}
+ Hence, the partial derivative reduces to 
+\begin{align*}
+\frac{\partial C(N, x, \hat x)}{\partial W_{i,j}^{(N)}} &= a_j^{(N-1)} \cdot \frac 2 {m_N} (a_i^{(N)} - \hat x_i) \sigma'(z_i^{(N)})
+\end{align*}
 {{< /raw >}}
