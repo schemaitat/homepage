@@ -29,7 +29,7 @@ tar -zxvf hugo.tar.gz -C ${HOME}/bin
 rm hugo.tar.gz
 
 # install poetry
-export POETRY_HOME=${HOME}/bin
+export POETRY_HOME=${HOME}
 curl -sSL https://install.python-poetry.org | python3 -
 
 # make all binaries executable
