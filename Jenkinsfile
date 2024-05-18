@@ -83,9 +83,10 @@ pipeline{
                 sed -i "s/{{DATE}}/$(date '+%A %e %B %Y')/g" config.toml
                 '''
                 sh "rm -rf public"
-                sh "quarto render && hugo --cacheDir $HOME/hugo_cache"
+                sh "./quarto-${QUARTO_VERSION}/bin/quarto render && hugo --cacheDir $HOME/hugo_cache"
             }
         }   
+
         stage("Update HTML"){
             steps{
                 sh'''#!/bin/bash
