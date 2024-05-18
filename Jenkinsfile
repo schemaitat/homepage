@@ -13,72 +13,26 @@ pipeline{
                 sh "git submodule update --init --recursive"
             }
         }   
-        stage('Install quarto'){
+
+        stage('Install binaries'){
             steps{
                 sh'''#!/bin/bash
-                export QUARTO_VERSION=1.4.554
-                # check if hugo is installed with the correct version
-                LOCAL_INSTALL=false
-
-                which quarto
-                if [ $? -ne 0 ]; then
-                    LOCAL_INSTALL=true
-                else
-                    quarto --version | grep "${QUARTO_VERSION}"
-                    if [ $? -ne 0 ]; then
-                        LOCAL_INSTALL=true
-                    fi
-                fi
-
-                if [ "$LOCAL_INSTALL" = "true" ]; then
-                    echo "Didn't find global quarto version with the required version $QUARTO_VERSION."
-                    echo "Hence, using curl to install a local release."
-                    
-                    mkdir -p ${HOME}/bin
-                    curl -o quarto.tar.gz -L \
-                        "https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/quarto-${QUARTO_VERSION}-linux-amd64.tar.gz"
-                    tar -zxvf quarto.tar.gz \
-                        --strip-components=1 \
-                        -C ${HOME}
-                    rm quarto.tar.gz
-                    chmod +x ${HOME}/bin/quarto
-                    which quarto
-                    quarto --version
-                    echo "Done."
-                fi
+                chmod +x ./scripts/install.sh
+                ./scripts/install.sh
                 '''
             }
         }
 
-        stage('Install hugo'){
+        stage('Create python venv and install packages'){
             steps{
                 sh'''#!/bin/bash
-                set -x
-                RELEASE=0.108.0
-                # check if hugo is installed with the correct version
-                LOCAL_HUGO_INSTALL=false
-
-                which hugo
-                if [ $? -ne 0 ]; then
-                    LOCAL_HUGO_INSTALL=true
-                else
-                    hugo version | grep "${RELEASE}+extended"
-                    if [ $? -ne 0 ]; then
-                        LOCAL_HUGO_INSTALL=true
-                    fi
-                fi
-
-                if [ "$LOCAL_HUGO_INSTALL" = "true" ]; then
-                    echo "Didn't find global hugo version with the required version $RELEASE."
-                    echo "Hence, using wget to install a local release."
-                    wget https://github.com/gohugoio/hugo/releases/download/v${RELEASE}/hugo_extended_${RELEASE}_Linux-64bit.tar.gz
-                    tar -xzf hugo_extended_${RELEASE}_Linux-64bit.tar.gz
-                    chmod +x ./hugo
-                    echo "Done."
-                fi
+                uv venv
+                source .venv/bin/activate
+                poetry install
                 '''
             }
         }
+
         stage('Build static HTML') {
             steps{
                 sh'''#!/bin/bash
@@ -87,7 +41,7 @@ pipeline{
                 sed -i "s/{{DATE}}/$(date '+%A %e %B %Y')/g" config.toml
                 '''
                 sh "rm -rf public"
-                sh "quarto render && hugo --cacheDir $HOME/hugo_cache"
+                sh "source .venv/bin/activate && quarto render && hugo --cacheDir $HOME/hugo_cache"
             }
         }   
 
