@@ -26,7 +26,9 @@ pipeline{
         stage('Create python venv and install packages'){
             steps{
                 sh'''#!/bin/bash
-                uv venv
+                uv self update
+                # as required by pyproject
+                uv venv --python 3.11
                 source .venv/bin/activate
                 poetry install
                 '''
