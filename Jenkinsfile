@@ -4,7 +4,7 @@ pipeline{
     environment{
         // look at local installation of hugo first if a 
         // installation with the wrong version exists
-        PATH="${WORKSPACE}:${PATH}"
+        PATH="${HOME}/bin:${WORKSPACE}:${PATH}"
     }
 
     stages {
@@ -33,12 +33,17 @@ pipeline{
                 if [ "$LOCAL_INSTALL" = "true" ]; then
                     echo "Didn't find global quarto version with the required version $QUARTO_VERSION."
                     echo "Hence, using curl to install a local release."
-
+                    
+                    mkdir -p ${HOME}/bin
                     curl -o quarto.tar.gz -L \
                         "https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/quarto-${QUARTO_VERSION}-linux-amd64.tar.gz"
-                    tar -zxvf quarto.tar.gz 
+                    tar -zxvf quarto.tar.gz \
+                        --strip-components=1
+                        -C ${HOME}
                     rm quarto.tar.gz
-                    chmod +x ./quarto-${QUARTO_VERSION}/bin/quarto
+                    chmod +x ${HOME}/bin/quarto
+                    which quarto
+                    quarto --version
                     echo "Done."
                 fi
                 '''
@@ -82,7 +87,7 @@ pipeline{
                 sed -i "s/{{DATE}}/$(date '+%A %e %B %Y')/g" config.toml
                 '''
                 sh "rm -rf public"
-                sh "./quarto-${QUARTO_VERSION}/bin/quarto render && hugo --cacheDir $HOME/hugo_cache"
+                sh "quarto render && hugo --cacheDir $HOME/hugo_cache"
             }
         }   
 
