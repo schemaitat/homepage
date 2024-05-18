@@ -1,25 +1,14 @@
 ---
-title: Reproducible development setup
-date: 2024-05-18T00:00:00.000Z
+title: "Reproducible development setup"
+date: 2024-05-18
 draft: false
-author: André
-description: How to create a reproducible dev environment.
+author: "André"
+description: "How to create a reproducible dev environment."
 toc: false
-tags:
-  - tutorial
-  - linux
-  - docker
-  - zsh
-  - development
-  - vs-code
-categories:
-  - tutorial
-  - linux
+tags: ["tutorial", "linux", "docker", "zsh", "development", "vs-code"]
+categories: ["tutorial", "linux"]
 ---
-
-
 {{< admonition abstract >}}
-
 **Things you get**
 - A script that installs **oh-my-zsh** with customizable plugins and other useful tools like **tmux** and custom scripts.
 
@@ -28,13 +17,12 @@ categories:
 
 **Git repository**
 - [schemaitat/vscode-dev-container](https://github.com/schemaitat/vscode-dev-container)
-
-{{< /admonition  >}}
+{{< /admonition >}}
 
 ## Introduction
-
-Originally, I wanted to have a reproducible vs code devcontainer, i.e. a docker container that
-looks similar to my local development setup. This task reduces to defining an [installation script](https://github.com/schemaitat/vscode-dev-container/blob/main/zsh-in-docker.sh) that installs things like oh-my-zsh (with plugins), packages like vim and tmux and aliases.
+Originally, I wanted to have a reproducible vs code devcontainer, i.e. a docker container that 
+looks similar to my local development setup. This task reduces to defining an [installation script
+](https://github.com/schemaitat/vscode-dev-container/blob/main/zsh-in-docker.sh) that installs things like oh-my-zsh (with plugins), packages like vim and tmux and aliases.
 
 ## How to
 
@@ -42,7 +30,7 @@ The script is based on [zsh-in-docker](https://github.com/deluan/zsh-in-docker) 
 
 A dockerfile for you vscode devcontainer could the look similar to:
 
-``` dockerfile
+```Dockerfile
 # This is only used for developing the zsh-in-docker script, but can be used as an example.
 
 FROM debian:latest
@@ -85,6 +73,6 @@ The parameter `-s` accepts either a local file or an url whereas the `-d` only a
 
 If you put this into a file called `.devcontainer/Dockerfile` you are instantly ready to run your project in a fully configured dev environment.
 
-Of course, the base image debian:latest may be changed to some base image suitable to your project, e.g. a python or whatever base image.
+Of course, the base image debian:latest may be changed to some base image suitable to your project, e.g. a python or whatever base image.
 
 Feel free to modify the script to your needs :vulcan_salute:

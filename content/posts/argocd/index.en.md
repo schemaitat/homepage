@@ -1,5 +1,4 @@
 ---
-weight: 5
 title: "Kubernetes as a service & Argo CD"
 date: 2022-12-31T09:55:28+08:00
 draft: false

@@ -1,5 +1,4 @@
 ---
-weight: 5
 title: "Backpropagation."
 date: 2022-07-03T17:55:28+08:00
 draft: true

@@ -1,5 +1,4 @@
 ---
-weight: 5
 title: "Building a homepage from scratch."
 date: 2022-05-16T17:55:28+08:00
 draft: false

@@ -1,5 +1,4 @@
 ---
-weight: 5
 title: "Hello, World !"
 date: 2022-03-22T17:55:28+08:00
 draft: false

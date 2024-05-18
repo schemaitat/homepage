@@ -13,6 +13,39 @@ pipeline{
                 sh "git submodule update --init --recursive"
             }
         }   
+        stage('Install quarto'){
+            steps{
+                sh'''#!/bin/bash
+                export QUARTO_VERSION=1.4.554
+                # check if hugo is installed with the correct version
+                LOCAL_INSTALL=false
+
+                which quarto
+                if [ $? -ne 0 ]; then
+                    LOCAL_INSTALL=true
+                else
+                    quarto --version | grep "${QUARTO_VERSION}"
+                    if [ $? -ne 0 ]; then
+                        LOCAL_INSTALL=true
+                    fi
+                fi
+
+                if [ "$LOCAL_INSTALL" = "true" ]; then
+                    echo "Didn't find global quarto version with the required version $QUARTO_VERSION."
+                    echo "Hence, using curl to install a local release."
+
+                    curl -o quarto.tar.gz -L \
+                        "https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/quarto-${QUARTO_VERSION}-linux-amd64.tar.gz"
+                    tar -zxvf quarto.tar.gz \
+                        --strip-components=1
+                    rm quarto.tar.gz
+                    chmod +x ./quarto
+                    echo "Done."
+                fi
+                '''
+            }
+        }
+
         stage('Install hugo'){
             steps{
                 sh'''#!/bin/bash
@@ -50,7 +83,7 @@ pipeline{
                 sed -i "s/{{DATE}}/$(date '+%A %e %B %Y')/g" config.toml
                 '''
                 sh "rm -rf public"
-                sh "hugo --cacheDir $HOME/hugo_cache"
+                sh "quarto render && hugo --cacheDir $HOME/hugo_cache"
             }
         }   
         stage("Update HTML"){

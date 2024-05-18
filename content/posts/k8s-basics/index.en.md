@@ -1,5 +1,4 @@
 ---
-weight: 5
 title: "Kubernetes basics"
 date: 2022-12-24T13:04:28+08:00
 lastmod: 2022-12-24T13:04:28+08:00
