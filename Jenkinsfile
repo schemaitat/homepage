@@ -39,7 +39,7 @@ pipeline{
                     tar -zxvf quarto.tar.gz \
                         --strip-components=1
                     rm quarto.tar.gz
-                    chmod +x ./quarto
+                    chmod +x ./quarto-${QUARTO_VERSION}/bin/quarto
                     echo "Done."
                 fi
                 '''
