@@ -1,6 +1,12 @@
 ---
 title: "Reproducible development setup"
-date: 2024-05-17T09:00:00+02:00
+date: 2024-05-17T13:04:28+02:00
+draft: false
+author: "André"
+description: "First blog post."
+toc: false
+tags: ["tutorial linux"]
+categories: ["tutorial"]
 ---
 {{< admonition abstract >}}
 **Things you get**

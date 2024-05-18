@@ -4,6 +4,7 @@ defaultContentLanguage = "en"
 theme = "LoveIt"
 
 ignoreErrors = ["error-missing-instagram-accesstoken"]
+ignoreFiles = [ "\\.qmd$", "\\.ipynb$", "\\.py$" ]
 
 # website title
 title = "Dr. André Schemaitat"
@@ -14,6 +15,7 @@ enableRobotsTXT = true
 #enableGitInfo = true
 # whether to use emoji code
 enableEmoji = true
+
 
 [languages]
   [languages.en]
