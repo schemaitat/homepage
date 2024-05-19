@@ -12,8 +12,10 @@ tar -zxvf quarto.tar.gz \
 rm quarto.tar.gz
 
 # install uv
+export UV_RELEASE=0.1.44
+
 curl -o uv.tar.gz -L \
-    "https://github.com/astral-sh/uv/releases/download/0.1.44/uv-x86_64-unknown-linux-gnu.tar.gz"
+    "https://github.com/astral-sh/uv/releases/download/${UV_RELEASE}/uv-x86_64-unknown-linux-gnu.tar.gz"
 tar -zxvf uv.tar.gz \
     --strip-components=1 \
     -C ${HOME}/bin
@@ -29,9 +31,7 @@ tar -zxvf hugo.tar.gz -C ${HOME}/bin
 rm hugo.tar.gz
 
 # install poetry
-export POETRY_HOME=${HOME}
-curl -sSL https://install.python-poetry.org | python3 -
-which poetry
+curl -sSL https://install.python-poetry.org | POETRY_HOME=${HOME} python3 -
 
 # make all binaries executable
 chmod -R +x ${HOME}/bin
