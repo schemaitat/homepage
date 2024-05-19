@@ -31,6 +31,7 @@ rm hugo.tar.gz
 # install poetry
 export POETRY_HOME=${HOME}
 curl -sSL https://install.python-poetry.org | python3 -
+which poetry
 
 # make all binaries executable
 chmod -R +x ${HOME}/bin
