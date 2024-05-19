@@ -27,7 +27,7 @@ pipeline{
             steps{
                 sh'''#!/bin/bash
                 # as required by pyproject
-                uv venv --python 3.11
+                uv venv --python 3.9
                 source .venv/bin/activate
                 poetry install
                 '''
