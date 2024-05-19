@@ -26,7 +26,7 @@ looks similar to my local development setup. This task reduces to defining an [i
 
 ## How to
 
-The script is based on [zsh-in-docker](https://github.com/deluan/zsh-in-docker) and contains some more configuration paramters like adding dotfiles and executing a post script. The script works like a cli and uses the bash `getopts` functionality to parse the arguments.
+The script is based on [zsh-in-docker](https://github.com/deluan/zsh-in-docker) and contains some more configuration parameters like adding dotfiles and executing a post script. The script works like a cli and uses the bash `getopts` functionality to parse the arguments.
 
 A dockerfile for you vscode devcontainer could the look similar to:
 
@@ -69,7 +69,7 @@ RUN sh -c "$(wget -qO - https://raw.githubusercontent.com/schemaitat/vscode-dev-
 ENTRYPOINT [ "/bin/zsh" ]
 ```
 
-The parameter `-s` accepts either a local file or an url whereas the `-d` only accepts urls right now and tries tu curl them.
+The parameter `-s` accepts either a local file or an url whereas the `-d` only accepts urls right now and tries to curl them.
 
 If you put this into a file called `.devcontainer/Dockerfile` you are instantly ready to run your project in a fully configured dev environment.
 
