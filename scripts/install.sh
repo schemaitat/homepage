@@ -1,6 +1,7 @@
 #!/bin/bash
 rm -rf ${HOME}/bin
 mkdir -p ${HOME}/bin
+mkdir -p ${HOME}/poetry
 
 # install quarto
 export QUARTO_VERSION=1.4.554
@@ -31,7 +32,7 @@ tar -zxvf hugo.tar.gz -C ${HOME}/bin
 rm hugo.tar.gz
 
 # install poetry
-curl -sSL https://install.python-poetry.org | POETRY_HOME=${HOME} python3 -
+curl -sSL https://install.python-poetry.org | POETRY_HOME=${HOME}/bin/poetry python3 -
 
 # make all binaries executable
 chmod -R +x ${HOME}/bin

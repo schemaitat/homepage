@@ -4,7 +4,7 @@ pipeline{
     environment{
         // look at local installation of hugo first if a 
         // installation with the wrong version exists
-        PATH="${HOME}/bin:${WORKSPACE}:${PATH}"
+        PATH="${HOME}/bin:${HOME}/bin/poetry/bin:${WORKSPACE}:${PATH}"
     }
 
     stages {
