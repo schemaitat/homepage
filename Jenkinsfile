@@ -42,7 +42,7 @@ pipeline{
                 sed -i "s/{{DATE}}/$(date '+%A %e %B %Y')/g" config.toml
                 '''
                 sh "rm -rf public"
-                sh "source .venv/bin/activate && quarto render && hugo --cacheDir $HOME/hugo_cache"
+                sh "poetry run quarto render && hugo --cacheDir $HOME/hugo_cache"
             }
         }   
 
