@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="272pt" height="231pt" viewBox="0.00 0.00 272.25 231.00">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 227)">
+<title>polars_query</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-227 268.25,-227 268.25,4 -4,4"/>
+<!-- AGG [col(&quot;sales&quot;).sum().alias(&quot;total_sales&quot;)]
+BY
+[col(&quot;stateDescription&quot;)] [(0, 0)] [(0, 0)] -->
+<g id="node1" class="node">
+<title>AGG [col(&quot;sales&quot;).sum().alias(&quot;total_sales&quot;)]
+BY
+[col(&quot;stateDescription&quot;)] [(0, 0)] [(0, 0)]</title>
+<polygon fill="none" stroke="black" points="264.25,-223 0,-223 0,-165.5 264.25,-165.5 264.25,-223"/>
+<text text-anchor="middle" x="132.12" y="-205.7" font-family="Times,serif" font-size="14.00">AGG [col(&quot;sales&quot;).sum().alias(&quot;total_sales&quot;)]</text>
+<text text-anchor="middle" x="132.12" y="-189.2" font-family="Times,serif" font-size="14.00">BY</text>
+<text text-anchor="middle" x="132.12" y="-172.7" font-family="Times,serif" font-size="14.00">[col(&quot;stateDescription&quot;)] [(0, 0)]</text>
+</g>
+<!-- WITH COLUMNS [&quot;date&quot;] [(0, 1)] -->
+<g id="node2" class="node">
+<title>WITH COLUMNS [&quot;date&quot;] [(0, 1)]</title>
+<polygon fill="none" stroke="black" points="217,-129.5 47.25,-129.5 47.25,-93.5 217,-93.5 217,-129.5"/>
+<text text-anchor="middle" x="132.12" y="-106.45" font-family="Times,serif" font-size="14.00">WITH COLUMNS [&quot;date&quot;]</text>
+</g>
+<!-- AGG [col(&quot;sales&quot;).sum().alias(&quot;total_sales&quot;)]
+BY
+[col(&quot;stateDescription&quot;)] [(0, 0)] [(0, 0)]&#45;&#45;WITH COLUMNS [&quot;date&quot;] [(0, 1)] -->
+<g id="edge1" class="edge">
+<title>AGG [col(&quot;sales&quot;).sum().alias(&quot;total_sales&quot;)]
+BY
+[col(&quot;stateDescription&quot;)] [(0, 0)] [(0, 0)]--WITH COLUMNS [&quot;date&quot;] [(0, 1)]</title>
+<path fill="none" stroke="black" d="M132.12,-165.01C132.12,-153.18 132.12,-139.83 132.12,-129.54"/>
+</g>
+<!-- Csv SCAN clean_data.csv;
+π 5/8;
+σ ((col(&quot;stateDescription&quot;)... [(0, 2)] -->
+<g id="node3" class="node">
+<title>Csv SCAN clean_data.csv;
+π 5/8;
+σ ((col(&quot;stateDescription&quot;)... [(0, 2)]</title>
+<polygon fill="none" stroke="black" points="218.5,-57.5 45.75,-57.5 45.75,0 218.5,0 218.5,-57.5"/>
+<text text-anchor="middle" x="132.12" y="-40.2" font-family="Times,serif" font-size="14.00">Csv SCAN clean_data.csv;</text>
+<text text-anchor="middle" x="132.12" y="-23.7" font-family="Times,serif" font-size="14.00">π 5/8;</text>
+<text text-anchor="middle" x="132.12" y="-7.2" font-family="Times,serif" font-size="14.00">σ ((col(&quot;stateDescription&quot;)...</text>
+</g>
+<!-- WITH COLUMNS [&quot;date&quot;] [(0, 1)]&#45;&#45;Csv SCAN clean_data.csv;
+π 5/8;
+σ ((col(&quot;stateDescription&quot;)... [(0, 2)] -->
+<g id="edge2" class="edge">
+<title>WITH COLUMNS [&quot;date&quot;] [(0, 1)]--Csv SCAN clean_data.csv;
+π 5/8;
+σ ((col(&quot;stateDescription&quot;)... [(0, 2)]</title>
+<path fill="none" stroke="black" d="M132.12,-93.38C132.12,-83.1 132.12,-69.77 132.12,-57.97"/>
+</g>
+</g>
+</svg>

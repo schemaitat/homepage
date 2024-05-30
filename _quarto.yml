@@ -3,4 +3,10 @@ project:
       
 format: 
   hugo-md:
-    code-fold: false
+    mermaid: 
+      theme: forest
+
+jupyter: python3
+
+editor: 
+  render-on-save: true

@@ -1,2 +1,5 @@
 serve:
-	hugo serve -D --renderToDisk --disableFastRender 
+	hugo serve -D --disableFastRender
+
+prev:
+	quarto preview
