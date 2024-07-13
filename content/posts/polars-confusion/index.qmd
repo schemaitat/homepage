@@ -259,7 +259,7 @@ print(f"Memory: {psutil.virtual_memory().total / 1024 ** 2} MB")
 
 ```{python}
 groups=["id_1", "id_2"]
-df = generate_data(10_000_000)
+df = generate_data(1_000_000)
 ```
 
 ```{python}

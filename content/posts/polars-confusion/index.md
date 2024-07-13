@@ -285,11 +285,11 @@ print(df_opt.head())
     │ ---  ┆ ---        ┆ ---        │
     │ i32  ┆ f64        ┆ f64        │
     ╞══════╪════════════╪════════════╡
-    │ 1    ┆ 0.0        ┆ 0.0        │
-    │ 14   ┆ 0.615385   ┆ 0.363636   │
-    │ 2    ┆ 0.75       ┆ 0.75       │
     │ 12   ┆ 0.666667   ┆ 0.0        │
+    │ 4    ┆ 0.0        ┆ 0.0        │
     │ 10   ┆ 0.444444   ┆ 0.285714   │
+    │ 14   ┆ 0.615385   ┆ 0.363636   │
+    │ 8    ┆ 0.769231   ┆ 0.444444   │
     └──────┴────────────┴────────────┘
     shape: (5, 4)
     ┌──────┬───────────────┬───────────┬──────────┐
@@ -297,11 +297,11 @@ print(df_opt.head())
     │ ---  ┆ ---           ┆ ---       ┆ ---      │
     │ i32  ┆ u32           ┆ f32       ┆ f64      │
     ╞══════╪═══════════════╪═══════════╪══════════╡
-    │ 1    ┆ 0             ┆ 0.1       ┆ 0.0      │
-    │ 14   ┆ 0             ┆ 0.1       ┆ 0.615385 │
-    │ 2    ┆ 0             ┆ 0.1       ┆ 0.75     │
     │ 12   ┆ 0             ┆ 0.1       ┆ 0.666667 │
+    │ 4    ┆ 0             ┆ 0.1       ┆ 0.0      │
     │ 10   ┆ 0             ┆ 0.1       ┆ 0.444444 │
+    │ 14   ┆ 0             ┆ 0.1       ┆ 0.615385 │
+    │ 8    ┆ 0             ┆ 0.1       ┆ 0.769231 │
     └──────┴───────────────┴───────────┴──────────┘
 
 {{< /admonition  >}}
@@ -339,14 +339,14 @@ print(opt.head(5))
     │ ---  ┆ ---  ┆ ---       ┆ ---      │
     │ i32  ┆ i32  ┆ f32       ┆ f64      │
     ╞══════╪══════╪═══════════╪══════════╡
-    │ 5    ┆ 1    ┆ 0.0       ┆ 0.666754 │
-    │ 10   ┆ 9    ┆ 0.0       ┆ 0.66843  │
-    │ 10   ┆ 4    ┆ 0.0       ┆ 0.66746  │
-    │ 14   ┆ 0    ┆ 0.0       ┆ 0.667492 │
-    │ 10   ┆ 8    ┆ 0.0       ┆ 0.665119 │
+    │ 11   ┆ 1    ┆ 0.0       ┆ 0.667575 │
+    │ 14   ┆ 9    ┆ 0.0       ┆ 0.669893 │
+    │ 13   ┆ 1    ┆ 0.0       ┆ 0.665026 │
+    │ 3    ┆ 0    ┆ 0.0       ┆ 0.667556 │
+    │ 1    ┆ 2    ┆ 0.0       ┆ 0.664243 │
     └──────┴──────┴───────────┴──────────┘
-    CPU times: user 1min 6s, sys: 12.4 s, total: 1min 19s
-    Wall time: 14 s
+    CPU times: user 1min 10s, sys: 11.1 s, total: 1min 21s
+    Wall time: 13.7 s
 
 ``` python
 import hvplot
@@ -854,12 +854,12 @@ if (window.Jupyter !== undefined) {
   background-color: transparent !important;
 }
 </style>
-<div id='p1036'>
-  <div id="b0d1621a-90f7-4f92-8bf8-c46399f620ee" data-root-id="p1036" style="display: contents;"></div>
+<div id='p1038'>
+  <div id="b0d08b81-460d-40a9-975f-79c7f20e10ec" data-root-id="p1038" style="display: contents;"></div>
 </div>
 <script type="application/javascript">(function(root) {
-  var docs_json = {"3f3005a3-1dd7-4eb3-9f00-462e32bc557b":{"version":"3.4.1","title":"Bokeh Application","roots":[{"type":"object","name":"panel.models.browser.BrowserInfo","id":"p1036"},{"type":"object","name":"panel.models.comm_manager.CommManager","id":"p1037","attributes":{"plot_id":"p1036","comm_id":"b3c20ac1c5f844778cefe9080f847cab","client_comm_id":"ea52afab75434e71b708dcf49bfbb52f"}}],"defs":[{"type":"model","name":"ReactiveHTML1"},{"type":"model","name":"FlexBox1","properties":[{"name":"align_content","kind":"Any","default":"flex-start"},{"name":"align_items","kind":"Any","default":"flex-start"},{"name":"flex_direction","kind":"Any","default":"row"},{"name":"flex_wrap","kind":"Any","default":"wrap"},{"name":"gap","kind":"Any","default":""},{"name":"justify_content","kind":"Any","default":"flex-start"}]},{"type":"model","name":"FloatPanel1","properties":[{"name":"config","kind":"Any","default":{"type":"map"}},{"name":"contained","kind":"Any","default":true},{"name":"position","kind":"Any","default":"right-top"},{"name":"offsetx","kind":"Any","default":null},{"name":"offsety","kind":"Any","default":null},{"name":"theme","kind":"Any","default":"primary"},{"name":"status","kind":"Any","default":"normalized"}]},{"type":"model","name":"GridStack1","properties":[{"name":"mode","kind":"Any","default":"warn"},{"name":"ncols","kind":"Any","default":null},{"name":"nrows","kind":"Any","default":null},{"name":"allow_resize","kind":"Any","default":true},{"name":"allow_drag","kind":"Any","default":true},{"name":"state","kind":"Any","default":[]}]},{"type":"model","name":"drag1","properties":[{"name":"slider_width","kind":"Any","default":5},{"name":"slider_color","kind":"Any","default":"black"},{"name":"value","kind":"Any","default":50}]},{"type":"model","name":"click1","properties":[{"name":"terminal_output","kind":"Any","default":""},{"name":"debug_name","kind":"Any","default":""},{"name":"clears","kind":"Any","default":0}]},{"type":"model","name":"FastWrapper1","properties":[{"name":"object","kind":"Any","default":null},{"name":"style","kind":"Any","default":null}]},{"type":"model","name":"NotificationAreaBase1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0}]},{"type":"model","name":"NotificationArea1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"notifications","kind":"Any","default":[]},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0},{"name":"types","kind":"Any","default":[{"type":"map","entries":[["type","warning"],["background","#ffc107"],["icon",{"type":"map","entries":[["className","fas fa-exclamation-triangle"],["tagName","i"],["color","white"]]}]]},{"type":"map","entries":[["type","info"],["background","#007bff"],["icon",{"type":"map","entries":[["className","fas fa-info-circle"],["tagName","i"],["color","white"]]}]]}]}]},{"type":"model","name":"Notification","properties":[{"name":"background","kind":"Any","default":null},{"name":"duration","kind":"Any","default":3000},{"name":"icon","kind":"Any","default":null},{"name":"message","kind":"Any","default":""},{"name":"notification_type","kind":"Any","default":null},{"name":"_destroyed","kind":"Any","default":false}]},{"type":"model","name":"TemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"BootstrapTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"TemplateEditor1","properties":[{"name":"layout","kind":"Any","default":[]}]},{"type":"model","name":"MaterialTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"copy_to_clipboard1","properties":[{"name":"fill","kind":"Any","default":"none"},{"name":"value","kind":"Any","default":null}]}]}};
-  var render_items = [{"docid":"3f3005a3-1dd7-4eb3-9f00-462e32bc557b","roots":{"p1036":"b0d1621a-90f7-4f92-8bf8-c46399f620ee"},"root_ids":["p1036"]}];
+  var docs_json = {"cb56c101-a404-4704-8725-ccfefa02ba75":{"version":"3.4.1","title":"Bokeh Application","roots":[{"type":"object","name":"panel.models.browser.BrowserInfo","id":"p1038"},{"type":"object","name":"panel.models.comm_manager.CommManager","id":"p1039","attributes":{"plot_id":"p1038","comm_id":"c1e9084f4c4a456eac96b82c57089de3","client_comm_id":"a6f0b8527cad43e092c43a832b839979"}}],"defs":[{"type":"model","name":"ReactiveHTML1"},{"type":"model","name":"FlexBox1","properties":[{"name":"align_content","kind":"Any","default":"flex-start"},{"name":"align_items","kind":"Any","default":"flex-start"},{"name":"flex_direction","kind":"Any","default":"row"},{"name":"flex_wrap","kind":"Any","default":"wrap"},{"name":"gap","kind":"Any","default":""},{"name":"justify_content","kind":"Any","default":"flex-start"}]},{"type":"model","name":"FloatPanel1","properties":[{"name":"config","kind":"Any","default":{"type":"map"}},{"name":"contained","kind":"Any","default":true},{"name":"position","kind":"Any","default":"right-top"},{"name":"offsetx","kind":"Any","default":null},{"name":"offsety","kind":"Any","default":null},{"name":"theme","kind":"Any","default":"primary"},{"name":"status","kind":"Any","default":"normalized"}]},{"type":"model","name":"GridStack1","properties":[{"name":"mode","kind":"Any","default":"warn"},{"name":"ncols","kind":"Any","default":null},{"name":"nrows","kind":"Any","default":null},{"name":"allow_resize","kind":"Any","default":true},{"name":"allow_drag","kind":"Any","default":true},{"name":"state","kind":"Any","default":[]}]},{"type":"model","name":"drag1","properties":[{"name":"slider_width","kind":"Any","default":5},{"name":"slider_color","kind":"Any","default":"black"},{"name":"value","kind":"Any","default":50}]},{"type":"model","name":"click1","properties":[{"name":"terminal_output","kind":"Any","default":""},{"name":"debug_name","kind":"Any","default":""},{"name":"clears","kind":"Any","default":0}]},{"type":"model","name":"FastWrapper1","properties":[{"name":"object","kind":"Any","default":null},{"name":"style","kind":"Any","default":null}]},{"type":"model","name":"NotificationAreaBase1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0}]},{"type":"model","name":"NotificationArea1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"notifications","kind":"Any","default":[]},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0},{"name":"types","kind":"Any","default":[{"type":"map","entries":[["type","warning"],["background","#ffc107"],["icon",{"type":"map","entries":[["className","fas fa-exclamation-triangle"],["tagName","i"],["color","white"]]}]]},{"type":"map","entries":[["type","info"],["background","#007bff"],["icon",{"type":"map","entries":[["className","fas fa-info-circle"],["tagName","i"],["color","white"]]}]]}]}]},{"type":"model","name":"Notification","properties":[{"name":"background","kind":"Any","default":null},{"name":"duration","kind":"Any","default":3000},{"name":"icon","kind":"Any","default":null},{"name":"message","kind":"Any","default":""},{"name":"notification_type","kind":"Any","default":null},{"name":"_destroyed","kind":"Any","default":false}]},{"type":"model","name":"TemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"BootstrapTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"TemplateEditor1","properties":[{"name":"layout","kind":"Any","default":[]}]},{"type":"model","name":"MaterialTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"copy_to_clipboard1","properties":[{"name":"fill","kind":"Any","default":"none"},{"name":"value","kind":"Any","default":null}]}]}};
+  var render_items = [{"docid":"cb56c101-a404-4704-8725-ccfefa02ba75","roots":{"p1038":"b0d08b81-460d-40a9-975f-79c7f20e10ec"},"root_ids":["p1038"]}];
   var docs = Object.values(docs_json)
   if (!docs) {
     return
