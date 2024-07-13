@@ -195,9 +195,6 @@ def optimize(df: pl.DataFrame, theta: list[float], group_by: list[str]) -> pl.Da
     .agg(
         **add_f1_score(theta)
     )
-    .pipe(
-      lambda df: df,
-    )
     .select(
         *group_by, cs.starts_with("f1")
     )
@@ -249,8 +246,10 @@ print(df_opt.head())
 
 ## More data
 Now, lets see if we can handle more data. Note that the output is generated on
-a single core machine. On my 8 core 16 GB machine, the following code runs in
-approximately 14 seconds.
+a single core machine and hence the parallelization is not any help here, however 
+I think that the result is still quite impressive.
+Feel free to benchmark this on your own or any other machine.
+On my 8 core 16 GB machine, the following code runs in approximately one second.
 ```{python}
 import psutil
 print(f"CPU: {psutil.cpu_count()}")

@@ -216,9 +216,6 @@ def optimize(df: pl.DataFrame, theta: list[float], group_by: list[str]) -> pl.Da
     .agg(
         **add_f1_score(theta)
     )
-    .pipe(
-      lambda df: df,
-    )
     .select(
         *group_by, cs.starts_with("f1")
     )
@@ -285,11 +282,11 @@ print(df_opt.head())
     │ ---  ┆ ---        ┆ ---        │
     │ i32  ┆ f64        ┆ f64        │
     ╞══════╪════════════╪════════════╡
-    │ 9    ┆ 0.666667   ┆ 0.571429   │
-    │ 2    ┆ 0.75       ┆ 0.75       │
-    │ 13   ┆ 0.571429   ┆ 0.666667   │
-    │ 0    ┆ 0.8        ┆ 0.545455   │
     │ 8    ┆ 0.769231   ┆ 0.444444   │
+    │ 7    ┆ 0.75       ┆ 0.571429   │
+    │ 5    ┆ 0.2        ┆ 0.222222   │
+    │ 2    ┆ 0.75       ┆ 0.75       │
+    │ 6    ┆ 0.8        ┆ 0.75       │
     └──────┴────────────┴────────────┘
     shape: (5, 4)
     ┌──────┬───────────────┬───────────┬──────────┐
@@ -297,11 +294,11 @@ print(df_opt.head())
     │ ---  ┆ ---           ┆ ---       ┆ ---      │
     │ i32  ┆ u32           ┆ f32       ┆ f64      │
     ╞══════╪═══════════════╪═══════════╪══════════╡
-    │ 9    ┆ 0             ┆ 0.1       ┆ 0.666667 │
-    │ 2    ┆ 0             ┆ 0.1       ┆ 0.75     │
-    │ 13   ┆ 1             ┆ 0.5       ┆ 0.666667 │
-    │ 0    ┆ 0             ┆ 0.1       ┆ 0.8      │
     │ 8    ┆ 0             ┆ 0.1       ┆ 0.769231 │
+    │ 7    ┆ 0             ┆ 0.1       ┆ 0.75     │
+    │ 5    ┆ 1             ┆ 0.5       ┆ 0.222222 │
+    │ 2    ┆ 0             ┆ 0.1       ┆ 0.75     │
+    │ 6    ┆ 0             ┆ 0.1       ┆ 0.8      │
     └──────┴───────────────┴───────────┴──────────┘
 
 {{< /admonition  >}}
@@ -309,8 +306,10 @@ print(df_opt.head())
 ## More data
 
 Now, lets see if we can handle more data. Note that the output is generated on
-a single core machine. On my 8 core 16 GB machine, the following code runs in
-approximately 14 seconds.
+a single core machine and hence the parallelization is not any help here, however
+I think that the result is still quite impressive.
+Feel free to benchmark this on your own or any other machine.
+On my 8 core 16 GB machine, the following code runs in approximately one second.
 
 ``` python
 import psutil
@@ -339,14 +338,14 @@ print(opt.head(5))
     │ ---  ┆ ---  ┆ ---       ┆ ---      │
     │ i32  ┆ i32  ┆ f32       ┆ f64      │
     ╞══════╪══════╪═══════════╪══════════╡
-    │ 3    ┆ 0    ┆ 0.0       ┆ 0.664162 │
-    │ 6    ┆ 1    ┆ 0.0       ┆ 0.664257 │
-    │ 14   ┆ 0    ┆ 0.0       ┆ 0.669728 │
-    │ 11   ┆ 6    ┆ 0.0       ┆ 0.668504 │
-    │ 5    ┆ 5    ┆ 0.0       ┆ 0.666328 │
+    │ 10   ┆ 0    ┆ 0.0       ┆ 0.666067 │
+    │ 1    ┆ 2    ┆ 0.0       ┆ 0.669303 │
+    │ 8    ┆ 1    ┆ 0.0       ┆ 0.665785 │
+    │ 8    ┆ 7    ┆ 0.0       ┆ 0.671941 │
+    │ 5    ┆ 8    ┆ 0.0       ┆ 0.668914 │
     └──────┴──────┴───────────┴──────────┘
-    CPU times: user 5.96 s, sys: 154 ms, total: 6.12 s
-    Wall time: 1.2 s
+    CPU times: user 6.35 s, sys: 146 ms, total: 6.5 s
+    Wall time: 1.08 s
 
 ``` python
 import hvplot
@@ -854,12 +853,12 @@ if (window.Jupyter !== undefined) {
   background-color: transparent !important;
 }
 </style>
-<div id='p1040'>
-  <div id="d3c8dba8-672c-4209-9c8d-2f981a213ebb" data-root-id="p1040" style="display: contents;"></div>
+<div id='p1054'>
+  <div id="d560f874-da0b-4fe9-86f7-66a2525a8f98" data-root-id="p1054" style="display: contents;"></div>
 </div>
 <script type="application/javascript">(function(root) {
-  var docs_json = {"35fe57a5-75e5-443b-8a6b-50ef0aa114aa":{"version":"3.4.1","title":"Bokeh Application","roots":[{"type":"object","name":"panel.models.browser.BrowserInfo","id":"p1040"},{"type":"object","name":"panel.models.comm_manager.CommManager","id":"p1041","attributes":{"plot_id":"p1040","comm_id":"834a672762134506813930fde7a6e5d5","client_comm_id":"27b37301852f4ce3b787e993cae398e6"}}],"defs":[{"type":"model","name":"ReactiveHTML1"},{"type":"model","name":"FlexBox1","properties":[{"name":"align_content","kind":"Any","default":"flex-start"},{"name":"align_items","kind":"Any","default":"flex-start"},{"name":"flex_direction","kind":"Any","default":"row"},{"name":"flex_wrap","kind":"Any","default":"wrap"},{"name":"gap","kind":"Any","default":""},{"name":"justify_content","kind":"Any","default":"flex-start"}]},{"type":"model","name":"FloatPanel1","properties":[{"name":"config","kind":"Any","default":{"type":"map"}},{"name":"contained","kind":"Any","default":true},{"name":"position","kind":"Any","default":"right-top"},{"name":"offsetx","kind":"Any","default":null},{"name":"offsety","kind":"Any","default":null},{"name":"theme","kind":"Any","default":"primary"},{"name":"status","kind":"Any","default":"normalized"}]},{"type":"model","name":"GridStack1","properties":[{"name":"mode","kind":"Any","default":"warn"},{"name":"ncols","kind":"Any","default":null},{"name":"nrows","kind":"Any","default":null},{"name":"allow_resize","kind":"Any","default":true},{"name":"allow_drag","kind":"Any","default":true},{"name":"state","kind":"Any","default":[]}]},{"type":"model","name":"drag1","properties":[{"name":"slider_width","kind":"Any","default":5},{"name":"slider_color","kind":"Any","default":"black"},{"name":"value","kind":"Any","default":50}]},{"type":"model","name":"click1","properties":[{"name":"terminal_output","kind":"Any","default":""},{"name":"debug_name","kind":"Any","default":""},{"name":"clears","kind":"Any","default":0}]},{"type":"model","name":"FastWrapper1","properties":[{"name":"object","kind":"Any","default":null},{"name":"style","kind":"Any","default":null}]},{"type":"model","name":"NotificationAreaBase1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0}]},{"type":"model","name":"NotificationArea1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"notifications","kind":"Any","default":[]},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0},{"name":"types","kind":"Any","default":[{"type":"map","entries":[["type","warning"],["background","#ffc107"],["icon",{"type":"map","entries":[["className","fas fa-exclamation-triangle"],["tagName","i"],["color","white"]]}]]},{"type":"map","entries":[["type","info"],["background","#007bff"],["icon",{"type":"map","entries":[["className","fas fa-info-circle"],["tagName","i"],["color","white"]]}]]}]}]},{"type":"model","name":"Notification","properties":[{"name":"background","kind":"Any","default":null},{"name":"duration","kind":"Any","default":3000},{"name":"icon","kind":"Any","default":null},{"name":"message","kind":"Any","default":""},{"name":"notification_type","kind":"Any","default":null},{"name":"_destroyed","kind":"Any","default":false}]},{"type":"model","name":"TemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"BootstrapTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"TemplateEditor1","properties":[{"name":"layout","kind":"Any","default":[]}]},{"type":"model","name":"MaterialTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"copy_to_clipboard1","properties":[{"name":"fill","kind":"Any","default":"none"},{"name":"value","kind":"Any","default":null}]}]}};
-  var render_items = [{"docid":"35fe57a5-75e5-443b-8a6b-50ef0aa114aa","roots":{"p1040":"d3c8dba8-672c-4209-9c8d-2f981a213ebb"},"root_ids":["p1040"]}];
+  var docs_json = {"c0a04397-6486-472f-9f7e-736a171f21b0":{"version":"3.4.1","title":"Bokeh Application","roots":[{"type":"object","name":"panel.models.browser.BrowserInfo","id":"p1054"},{"type":"object","name":"panel.models.comm_manager.CommManager","id":"p1055","attributes":{"plot_id":"p1054","comm_id":"9ec7f94c441e4531b5d05d0f02641aed","client_comm_id":"f09f001f9b3a4f84a10a3691489956b1"}}],"defs":[{"type":"model","name":"ReactiveHTML1"},{"type":"model","name":"FlexBox1","properties":[{"name":"align_content","kind":"Any","default":"flex-start"},{"name":"align_items","kind":"Any","default":"flex-start"},{"name":"flex_direction","kind":"Any","default":"row"},{"name":"flex_wrap","kind":"Any","default":"wrap"},{"name":"gap","kind":"Any","default":""},{"name":"justify_content","kind":"Any","default":"flex-start"}]},{"type":"model","name":"FloatPanel1","properties":[{"name":"config","kind":"Any","default":{"type":"map"}},{"name":"contained","kind":"Any","default":true},{"name":"position","kind":"Any","default":"right-top"},{"name":"offsetx","kind":"Any","default":null},{"name":"offsety","kind":"Any","default":null},{"name":"theme","kind":"Any","default":"primary"},{"name":"status","kind":"Any","default":"normalized"}]},{"type":"model","name":"GridStack1","properties":[{"name":"mode","kind":"Any","default":"warn"},{"name":"ncols","kind":"Any","default":null},{"name":"nrows","kind":"Any","default":null},{"name":"allow_resize","kind":"Any","default":true},{"name":"allow_drag","kind":"Any","default":true},{"name":"state","kind":"Any","default":[]}]},{"type":"model","name":"drag1","properties":[{"name":"slider_width","kind":"Any","default":5},{"name":"slider_color","kind":"Any","default":"black"},{"name":"value","kind":"Any","default":50}]},{"type":"model","name":"click1","properties":[{"name":"terminal_output","kind":"Any","default":""},{"name":"debug_name","kind":"Any","default":""},{"name":"clears","kind":"Any","default":0}]},{"type":"model","name":"FastWrapper1","properties":[{"name":"object","kind":"Any","default":null},{"name":"style","kind":"Any","default":null}]},{"type":"model","name":"NotificationAreaBase1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0}]},{"type":"model","name":"NotificationArea1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"notifications","kind":"Any","default":[]},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0},{"name":"types","kind":"Any","default":[{"type":"map","entries":[["type","warning"],["background","#ffc107"],["icon",{"type":"map","entries":[["className","fas fa-exclamation-triangle"],["tagName","i"],["color","white"]]}]]},{"type":"map","entries":[["type","info"],["background","#007bff"],["icon",{"type":"map","entries":[["className","fas fa-info-circle"],["tagName","i"],["color","white"]]}]]}]}]},{"type":"model","name":"Notification","properties":[{"name":"background","kind":"Any","default":null},{"name":"duration","kind":"Any","default":3000},{"name":"icon","kind":"Any","default":null},{"name":"message","kind":"Any","default":""},{"name":"notification_type","kind":"Any","default":null},{"name":"_destroyed","kind":"Any","default":false}]},{"type":"model","name":"TemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"BootstrapTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"TemplateEditor1","properties":[{"name":"layout","kind":"Any","default":[]}]},{"type":"model","name":"MaterialTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"copy_to_clipboard1","properties":[{"name":"fill","kind":"Any","default":"none"},{"name":"value","kind":"Any","default":null}]}]}};
+  var render_items = [{"docid":"c0a04397-6486-472f-9f7e-736a171f21b0","roots":{"p1054":"d560f874-da0b-4fe9-86f7-66a2525a8f98"},"root_ids":["p1054"]}];
   var docs = Object.values(docs_json)
   if (!docs) {
     return
