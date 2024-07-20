@@ -89,7 +89,7 @@ if and only if the score is greater than or equal to the threshold.
 Thus we can ask ourselves: Which threshold can we use to optimize for example the f1-score ? 
 
 The most naive approach is to compute all values of the f1-score for a large enough number of thresholds
-and keep  theta for which the f1-score is maximal.
+to find some theta for which the f1-score is maximal.
 
 The next question could be: Which thresholds can we use to optimize the f1-score on certain 
 partitions of our data ?
@@ -100,11 +100,11 @@ We will answer both questions at once since the first question is a special case
 
 An elegant solution to the problem is to use wide dataframes.
 For each theta, we generate a boolean column `y_pred(theta)` and four columns 
-defining the confusion with respect to that theta. Furtermore, we add
+defining the confusion with respect to that theta. Furthermore, we add
 one more column with our metric in question, lets say the f1-score. In total
 we get 6*len(theta) extra columns.
 
-Now, the whole magic of why polars is such a great choice so solve this problem
+Now, the whole magic of why polars is such a great choice to solve this problem
 is that all expression will be calculated in parallel, and in addition, we 
 can easily group our dataframe by our id (grouping) variables that define the
 partition. 
@@ -238,8 +238,11 @@ df_opt = (
   )
 )
 
+print("DataFrame with confusion and boolean predictions:")
 print(df_wide.head())
+print("f1-scores for different thresholds and groups:")
 print(df_grouped.head())
+print("Optimal thresholds and f1-scores:")
 print(df_opt.head())
 ```
 {{< /admonition >}}
@@ -247,7 +250,9 @@ print(df_opt.head())
 ## More data
 Now, lets see if we can handle more data. Note that the output is generated on
 a single core machine and hence the parallelization is not any help here, however 
-I think that the result is still quite impressive.
+I think that the result is still quite impressive. PS: I tried to implement the same logic
+in pandas, however the performance was not even close to the one of polars and I got a lot 
+of warnings and errors about too many columns.
 Feel free to benchmark this on your own or any other machine.
 On my 8 core 16 GB machine, the following code runs in approximately one second.
 ```{python}
@@ -281,6 +286,6 @@ hvplot.extension("matplotlib")
 )
 ```
 
-Feel free to experiment with that code or to build a benchmark using different
+Feel free to experiment with the code or to build a benchmark using different
 techniques and tools.
 
