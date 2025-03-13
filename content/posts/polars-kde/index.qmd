@@ -2,9 +2,9 @@
 title: Kernel Density Estimation with Polars
 date: "2025-03-12"
 categories: 
-  - tutorial
   - data science
   - dataframes
+  - polars
 tags: 
   - python
   - polars
@@ -14,7 +14,7 @@ tags:
 draft: false
 ---
 {{< admonition abstract >}}
-We explore how to use [polars](https://pola.rs/)' out of the box optimizations to
+We see how to use [polars](https://pola.rs/)' out of the box optimizations to
 make parallelized kernel density estimations. To this end, I created the [polars_kde](https://github.com/schemaitat/polars_kde) package, which is a polars plugin backed by some Rust code. 
 {{< /admonition >}}
 
@@ -24,7 +24,7 @@ At the time of writing the `polars_kde` package has version `0.1.4` and is avail
 {{< /admonition >}}
 
 {{< admonition info >}}
-By now, the standard reference for writing polars plugins is Marco Gorelli's excellent tutorial [here](https://marcogorelli.github.io/polars-plugins-tutorial/). 
+By now, the standard reference for writing polars plugins is Marco Gorelli's excellent tutorial [here](https://marcogorelli.github.io/polars-plugins-tutorial/). If you want to learn how the internals of polars plugins work, please have a look at his tutorial.
 {{< /admonition >}}
 
 {{< admonition tip >}}
@@ -32,7 +32,7 @@ Some advertisement: If you haven't already checked out my other polars plugin [p
 The plugin enables **very** fast approximate joins on string columns (fuzzy matching but with a twist). The implementation is entirely written from scratch in Rus and uses n-gram vectorization of strings with a fast cosine similarity computation using sparse matrices.
 {{< /admonition >}}
 
-# Introduction
+## Introduction
 
 Kernel Density Estimation (KDE) is a non-parametric way to estimate the probability density function of a random variable. I recently created a basic [marimo](https://marimo.app/) notebook on how to visualize feature distributions 
 and drift over time, possibly grouped by another categorical variable, e.g. the target of a classifier. See my repository [marimo_notebooks](https://github.com/schemaitat/marimo_notebooks) for more details or check out the interactive notebook [here](https://marimo.app/gh/schemaitat/marimo_notebooks/main?entrypoint=notebook%2Ffeature_drift.py).
@@ -45,12 +45,55 @@ The updated notebook with the new polars plugin in place can be found [here](htt
 If you (trust me) and want to run the notebook in your local environment, simpliy fire 
 
 ```bash
-uv run marimo edit https://github.com/schemaitat/marimo_notebooks/blob/main/notebook/feature_drift_fast.py
+uv tool run marimo edit https://github.com/schemaitat/marimo_notebooks/blob/main/notebook/feature_drift_fast.py
 ```
 
-Pretty awesome stuff by  the marimo team!
+The final notebook looks like this:
 
-# Examples 
+![Marimo Notebook](marimo_notebook_screenshot.png)
+
+## Rust side
+
+On the rust side of things, all we need to to is wrapping an already existing functionality into a polars expression.
+Often, this is the standard approach on how to create polars plugins. Onother example is for example the [polars-reverse-geocode](https://github.com/MarcoGorelli/polars-reverse-geocode) plugin.
+
+```rust
+use kernel_density_estimation::prelude::*;
+use polars::prelude::*;
+use polars_core::utils::align_chunks_binary;
+use pyo3_polars::derive::polars_expr;
+use serde::Deserialize;
+
+#[derive(Deserialize)]
+struct KdeKwargs {
+    eval_points: Vec<f32>,
+}
+
+fn compute_kde(sample_points: Vec<f32>, eval_points: Vec<f32>) -> Vec<f32> {
+    let kde = KernelDensityEstimator::new(sample_points, Silverman, Normal);
+    kde.pdf(&eval_points)
+}
+
+
+#[polars_expr(output_type_func=same_output_type)]
+fn kde_agg(inputs: &[Series], kwargs: KdeKwargs) -> PolarsResult<Series> {
+    let values = &inputs[0].f32()?;
+    let eval_points = kwargs.eval_points;
+
+    let sample_points = values.into_no_null_iter().collect::<Vec<_>>();
+
+    let samples = compute_kde(sample_points, eval_points);
+
+    Ok(Series::new(PlSmallStr::EMPTY, samples))
+}
+```
+
+{{< admonition note >}}
+You see that I use `Normal` as Kernel and `Silverman` as bandwidth estimator. This is a common default choice, but a future improvement would be to make these parameters configurable.
+{{< /admonition >}}
+
+
+## Examples 
 
 To get the basic idea, we start with a simple example. We have a dataframe with two columns, `id` and `values`. We group by `id` and compute the kde for the `values` column.
 We work with a fixed set of evaluation points, which are the points at which the kde is evaluated.
@@ -122,9 +165,9 @@ The `kde` function works also on `group_by_dyanmic` groups and is particularly u
 aggregations.
 {{< /admonition >}}
 
-# Speed
+## Speed
 
-Especially, for large dataframes and many groups, the speedup is significant.
+Especially, for large dataframes and many groups, the speedup is significant. Compared to the `scipy` implementation, the `polars_kde` is faster even for a single operation faster.
 For illustration, let us look at some boilerplate code that can be used to generate more benchmarks.
 
 ```{python}
