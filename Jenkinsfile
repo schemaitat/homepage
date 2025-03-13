@@ -39,7 +39,9 @@ pipeline{
                 sed -i "s/{{DATE}}/$(date '+%A %e %B %Y')/g" config.toml
                 '''
                 sh "rm -rf public"
-                sh "quarto render && hugo --cacheDir $HOME/hugo_cache"
+                // add uv run to build with the 
+                // correct python kernel (managed by uv)
+                sh "uv run quarto render && hugo --cacheDir $HOME/hugo_cache"
             }
         }   
 
