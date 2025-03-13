@@ -24,12 +24,12 @@ make parallelized computations. An interesting example is the confusion
 of a classifier model and classical derived metrics like precision, recall
 or the f1-score.
 
-{{< /admonition  >}}
+{{< /admonition >}}
 {{< admonition note >}}
 
 Polars is a blazingly fast DataFrame library implemented in Rust. It just had its 1.0 (actually 1.1) release and is a production ready tool with a stable an well designed api.
 
-{{< /admonition  >}}
+{{< /admonition >}}
 
 ## Setup
 
@@ -282,11 +282,11 @@ print(df_opt.head())
     │ ---  ┆ ---        ┆ ---        │
     │ i32  ┆ f64        ┆ f64        │
     ╞══════╪════════════╪════════════╡
-    │ 0    ┆ 0.8        ┆ 0.545455   │
-    │ 14   ┆ 0.615385   ┆ 0.363636   │
-    │ 10   ┆ 0.444444   ┆ 0.285714   │
-    │ 6    ┆ 0.8        ┆ 0.75       │
-    │ 9    ┆ 0.666667   ┆ 0.571429   │
+    │ 8    ┆ 0.769231   ┆ 0.444444   │
+    │ 4    ┆ 0.0        ┆ 0.0        │
+    │ 11   ┆ 0.666667   ┆ 0.666667   │
+    │ 13   ┆ 0.571429   ┆ 0.666667   │
+    │ 3    ┆ 0.6        ┆ 0.5        │
     └──────┴────────────┴────────────┘
     Optimal thresholds and f1-scores:
     shape: (5, 4)
@@ -295,14 +295,14 @@ print(df_opt.head())
     │ ---  ┆ ---           ┆ ---       ┆ ---      │
     │ i32  ┆ u32           ┆ f32       ┆ f64      │
     ╞══════╪═══════════════╪═══════════╪══════════╡
-    │ 0    ┆ 0             ┆ 0.1       ┆ 0.8      │
-    │ 14   ┆ 0             ┆ 0.1       ┆ 0.615385 │
-    │ 10   ┆ 0             ┆ 0.1       ┆ 0.444444 │
-    │ 6    ┆ 0             ┆ 0.1       ┆ 0.8      │
-    │ 9    ┆ 0             ┆ 0.1       ┆ 0.666667 │
+    │ 8    ┆ 0             ┆ 0.1       ┆ 0.769231 │
+    │ 4    ┆ 0             ┆ 0.1       ┆ 0.0      │
+    │ 11   ┆ 0             ┆ 0.1       ┆ 0.666667 │
+    │ 13   ┆ 1             ┆ 0.5       ┆ 0.666667 │
+    │ 3    ┆ 0             ┆ 0.1       ┆ 0.6      │
     └──────┴───────────────┴───────────┴──────────┘
 
-{{< /admonition  >}}
+{{< /admonition >}}
 
 ## More data
 
@@ -341,14 +341,14 @@ print(opt.head(5))
     │ ---  ┆ ---  ┆ ---       ┆ ---      │
     │ i32  ┆ i32  ┆ f32       ┆ f64      │
     ╞══════╪══════╪═══════════╪══════════╡
-    │ 14   ┆ 2    ┆ 0.0       ┆ 0.66452  │
-    │ 14   ┆ 7    ┆ 0.0       ┆ 0.664354 │
-    │ 4    ┆ 6    ┆ 0.0       ┆ 0.67379  │
-    │ 0    ┆ 3    ┆ 0.0       ┆ 0.672407 │
-    │ 7    ┆ 0    ┆ 0.0       ┆ 0.659814 │
+    │ 9    ┆ 5    ┆ 0.0       ┆ 0.655642 │
+    │ 2    ┆ 4    ┆ 0.0       ┆ 0.674727 │
+    │ 11   ┆ 6    ┆ 0.0       ┆ 0.668504 │
+    │ 6    ┆ 1    ┆ 0.0       ┆ 0.664257 │
+    │ 4    ┆ 1    ┆ 0.0       ┆ 0.660141 │
     └──────┴──────┴───────────┴──────────┘
-    CPU times: user 6.83 s, sys: 111 ms, total: 6.94 s
-    Wall time: 1.2 s
+    CPU times: user 7.41 s, sys: 191 ms, total: 7.6 s
+    Wall time: 1.08 s
 
 ``` python
 import seaborn as sns

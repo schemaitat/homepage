@@ -29,7 +29,7 @@ categories:
 **Git repository**
 - [schemaitat/vscode-dev-container](https://github.com/schemaitat/vscode-dev-container)
 
-{{< /admonition  >}}
+{{< /admonition >}}
 
 ## Introduction
 

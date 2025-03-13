@@ -20,23 +20,23 @@ draft: false
 We explore how to use [polars](https://pola.rs/)' out of the box optimizations to
 make parallelized kernel density estimations. To this end, I created the [polars_kde](https://github.com/schemaitat/polars_kde) package, which is a polars plugin backed by some Rust code.
 
-{{< /admonition  >}}
+{{< /admonition >}}
 {{< admonition note >}}
 
 At the time of writing the `polars_kde` package has version `0.1.4` and is available on [pypi](https://pypi.org/project/polars-kde/).
 
-{{< /admonition  >}}
+{{< /admonition >}}
 {{< admonition info >}}
 
 By now, the standard reference for writing polars plugins is Marco Gorelli's excellent tutorial [here](https://marcogorelli.github.io/polars-plugins-tutorial/).
 
-{{< /admonition  >}}
+{{< /admonition >}}
 {{< admonition tip >}}
 
 Some advertisement: If you haven't already checked out my other polars plugin [polars_sim](https://github.com/schemaitat/polars_sim), make sure to have a look.
 The plugin enables **very** fast approximate joins on string columns (fuzzy matching but with a twist). The implementation is entirely written from scratch in Rus and uses n-gram vectorization of strings with a fast cosine similarity computation using sparse matrices.
 
-{{< /admonition  >}}
+{{< /admonition >}}
 
 # Introduction
 
@@ -85,8 +85,8 @@ print(df_kde)
     │ --- ┆ ---                             │
     │ u32 ┆ list[f32]                       │
     ╞═════╪═════════════════════════════════╡
-    │ 0   ┆ [1.816287, 2.407217, … 1.1300e… │
     │ 1   ┆ [1.7249e-11, 0.000002, … 0.000… │
+    │ 0   ┆ [1.816287, 2.407217, … 1.1300e… │
     └─────┴─────────────────────────────────┘
 
 Now lets generate some more data and add a visualization:
@@ -139,7 +139,7 @@ See also the Readme of the [polars_kde](https://github.com/schemaitat/polars_kde
 The `kde` function works also on `group_by_dyanmic` groups and is particularly useful for timeseries
 aggregations.
 
-{{< /admonition  >}}
+{{< /admonition >}}
 
 # Speed
 

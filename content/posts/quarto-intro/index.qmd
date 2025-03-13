@@ -273,9 +273,6 @@ Since polars is my newly loved :heart: and absolute favorite data processing lib
 
 ```{python}
 import polars as pl
-import hvplot
-
-hvplot.extension("matplotlib")
 
 df = (
   pl.scan_csv("clean_data.csv")
@@ -299,7 +296,13 @@ df = (
 ```
 
 ```{python}
-df.collect().plot.line(x="date", y="total_sales", by="state")
+import seaborn as sns
+sns.lineplot(
+    data=df.collect(),
+    x="date",
+    y="total_sales",
+    hue="state"
+)
 ```
 
 
