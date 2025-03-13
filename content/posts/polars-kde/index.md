@@ -204,14 +204,21 @@ df_bench = pl.concat([
     for n_groups in bench_n_groups
     for n_rows in bench_n_rows
 ])
+# Include this to generate the plot.
+# Here, I added the output on my local machine with 8 cores,
+# since the build agent is single core and we would not see
+# any parallelization.
 
-sns.catplot(
-    df_bench,
-    x="n_rows",
-    y="time",
-    hue="n_groups",
-    kind="point"
-)
+# sns.catplot(
+#     df_bench,
+#     x="n_rows",
+#     y="time",
+#     hue="n_groups",
+#     kind="point"
+# )
 ```
 
-![](index_files/figure-markdown_strict/cell-4-output-1.png)
+<figure>
+<img src="catplot.png" alt="Catplot" />
+<figcaption aria-hidden="true">Catplot</figcaption>
+</figure>
