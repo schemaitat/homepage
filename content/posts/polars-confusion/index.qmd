@@ -275,14 +275,15 @@ print(opt.head(5))
 
 
 ```{python}
-import hvplot
-hvplot.extension("matplotlib")
-
-(
+import seaborn as sns
+sns.heatmap(
   opt
   .with_columns(f1_opt=pl.col("f1_opt").round(2))
-  .plot
-  .heatmap("id_1", "id_2", "f1_opt", height=600, width=800)
+  .sort("id_1", "id_2")
+  .pivot(on="id_1", index="id_2", values= "f1_opt")
+  .drop("id_2"),
+  annot=True,
+  cmap="viridis",
 )
 ```
 

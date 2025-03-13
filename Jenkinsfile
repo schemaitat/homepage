@@ -4,7 +4,7 @@ pipeline{
     environment{
         // look at local installation of hugo first if a 
         // installation with the wrong version exists
-        PATH="${HOME}/bin:${HOME}/bin/poetry/bin:${WORKSPACE}:${PATH}"
+        PATH="${HOME}/bin:${WORKSPACE}:${PATH}"
     }
 
     stages {
@@ -26,10 +26,7 @@ pipeline{
         stage('Create python venv and install packages'){
             steps{
                 sh'''#!/bin/bash
-                # as required by pyproject
-                uv venv --python 3.9
-                source .venv/bin/activate
-                poetry install
+                uv sync 
                 '''
             }
         }
@@ -42,7 +39,7 @@ pipeline{
                 sed -i "s/{{DATE}}/$(date '+%A %e %B %Y')/g" config.toml
                 '''
                 sh "rm -rf public"
-                sh "poetry run quarto render && hugo --cacheDir $HOME/hugo_cache"
+                sh "quarto render && hugo --cacheDir $HOME/hugo_cache"
             }
         }   
 
