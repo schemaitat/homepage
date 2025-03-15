@@ -349,7 +349,7 @@ set +x
     + curl wttr.in/Münster
       % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                      Dload  Upload   Total   Spent    Left  Speed
-      0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100  8732  100  8732    0     0  33545      0 --:--:-- --:--:-- --:--:-- 33584
+      0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100  8732  100  8732    0     0  21252      0 --:--:-- --:--:-- --:--:-- 21297
 
     Weather report: Münster
 

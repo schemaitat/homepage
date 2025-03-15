@@ -226,6 +226,19 @@ def benchmark(n_groups, n_rows):
       .agg(
         kde = pk.kde("values", eval_points = eval_points),
       )
+      .with_columns(
+          eval_points=pl.lit(eval_points)
+      )
+      .explode("kde", "eval_points")
+    )
+
+    start = time.time()
+    df_kde = (
+       df
+      .group_by("id")
+      .agg(
+        kde = pk.kde("values", eval_points = eval_points),
+      )
     )
     end = time.time()
 
