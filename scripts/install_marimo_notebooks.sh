@@ -20,7 +20,6 @@ else
 fi
 
 for notebook in "marimo/*.py"; do
-    # uv run marimo export html-wasm $notebook -o $mytmpdir/$(basename $notebook)
     # remove .py ending
     dir_name=$(basename $notebook)
     dir_name="${dir_name%.*}"

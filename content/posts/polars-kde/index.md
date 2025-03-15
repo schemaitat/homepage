@@ -12,12 +12,15 @@ tags:
   - optimization
   - eda
 draft: false
+featuredImage: featured.png
+execute:
+  cache: true
 ---
 
 
 {{< admonition abstract >}}
 
-We see how to use [polars](https://pola.rs/)' out of the box optimizations to
+We will see how to use [polars](https://pola.rs/)' out of the box optimizations to
 make parallelized kernel density estimations. To this end, I created the [polars_kde](https://github.com/schemaitat/polars_kde) package, which is a polars plugin backed by some Rust code.
 
 {{< /admonition >}}
@@ -40,8 +43,7 @@ The plugin enables **very** fast approximate joins on string columns (fuzzy matc
 
 ## Introduction
 
-Kernel Density Estimation (KDE) is a non-parametric way to estimate the probability density function of a random variable. I recently created a basic [marimo](https://marimo.app/) notebook on how to visualize feature distributions
-and drift over time, possibly grouped by another categorical variable, e.g. the target of a classifier. See my repository [marimo_notebooks](https://github.com/schemaitat/marimo_notebooks) for more details or check out the interactive notebook [here](https://marimo.app/gh/schemaitat/marimo_notebooks/main?entrypoint=notebook%2Ffeature_drift.py).
+Kernel Density Estimation (KDE) is a non-parametric way to estimate the probability density function of a random variable. I recently created a basic [marimo](https://marimo.app/) notebook on how to visualize feature distributions and drift over time, possibly grouped by another categorical variable, e.g. the target of a classifier. See my repository [marimo_notebooks](https://github.com/schemaitat/marimo_notebooks) for more details or check out the interactive notebook [here](https://marimo.app/gh/schemaitat/marimo_notebooks/main?entrypoint=notebook%2Ffeature_drift.py).
 
 While working on this notebook, I realized that the computations usually involve multiple kde's for different slices of the data. In order to have a polars built-in method to compute kde's, I created the `polars_kde` package. This enables optimized comutations and polars-native code (as opposed to for example using `scipy`).
 
@@ -53,24 +55,67 @@ If you (trust me) and want to run the notebook in your local environment, simpli
 uv tool run marimo edit https://github.com/schemaitat/marimo_notebooks/blob/main/notebook/feature_drift_fast.py
 ```
 
-The final notebook looks like this:
+{{< typeit >}}
 
-<figure>
-<img src="marimo_notebook_screenshot.png" alt="Marimo Notebook" />
-<figcaption aria-hidden="true">Marimo Notebook</figcaption>
-</figure>
+Or as an interactive [marimo](https://marimo.io/) notebook (loading the packages can take a few seconds):
 
-Or as an interactive marimo notebook (loading the packages can take a few second):
+{{< /typeit >}}
+{{< admonition  note >}}
 
+The interactive marimo notebook uses the `scipy` implementation. The `polars_kde` package is not yet available as wasm build.
+
+{{< /admonition >}}
 {{< admonition type="example" title="Interactive Marimo Notebook" >}}
 <iframe src="/marimo/feature_drift/index.html" width="100%" height="700" frameborder="0">
 </iframe>
 {{< /admonition >}}
+{{< admonition type="tip" title="Adding interactive marimo notebooks to a static blog." open=false >}}
+
+Adding interactive marimo notebooks to a static blog is as easy as adding an iframe for wasm html files. See the [docs](https://docs.marimo.io/guides/exporting/#export-to-wasm-powered-html). The marimo notebooks are self-contained and can be hosted on any static file server.
+
+I integrated this into my workflow by adding a `marimo` folder containing all the notebooks. Then, each notebook is exported to a same named folder in the `public` folder (where the rendered blog html lives).
+
+In my Jenkins pipline, I *install* the notebooks as follows:
+
+``` bash
+#!/bin/bash
+
+if [ -z "$1" ]; then
+    echo "Usage: $0 <output_dir>"
+    echo "  output_dir: directory to store the rendered notebooks"
+    exit 1
+fi
+
+output_dir=${1:-public}/marimo
+
+# create a temp directory to store the rendered notebooks
+mytmpdir=$(mktemp -d 2>/dev/null || mktemp -d -t 'mytmpdir')
+
+
+if [ -d $output_dir ]; then
+    echo "Output directory already exists. Clearing it."
+    rm -rf $output_dir
+else
+    mkdir -p $output_dir
+fi
+
+for notebook in "marimo/*.py"; do
+    # remove .py ending
+    dir_name=$(basename $notebook)
+    dir_name="${dir_name%.*}"
+    echo -ne 'Y' | uv run marimo export html-wasm --sandbox --mode run $notebook -o $mytmpdir/$dir_name
+    mv $mytmpdir/$dir_name ${output_dir}/$dir_name
+done
+
+
+trap "rm -rf $mytmpdir" EXIT SIGINT SIGTERM SIGQUIT SIGKILL
+```
+
+{{< /admonition >}}
 
 ## Rust side
 
-On the rust side of things, all we need to to is wrapping an already existing functionality into a polars expression.
-Often, this is the standard approach on how to create polars plugins. Onother example is for example the [polars-reverse-geocode](https://github.com/MarcoGorelli/polars-reverse-geocode) plugin.
+On the rust side of things, all we need to do is wrapping an already existing functionality into a polars expression. Often, this is the standard approach on how to create polars plugins. Onother example is for example the [polars-reverse-geocode](https://github.com/MarcoGorelli/polars-reverse-geocode) plugin.
 
 ``` rust
 use kernel_density_estimation::prelude::*;
@@ -105,14 +150,13 @@ fn kde_agg(inputs: &[Series], kwargs: KdeKwargs) -> PolarsResult<Series> {
 
 {{< admonition note >}}
 
-You see that I use `Normal` as Kernel and `Silverman` as bandwidth estimator. This is a common default choice, but a future improvement would be to make these parameters configurable.
+You see that I use `Normal` as kernel and `Silverman` as bandwidth estimator. This is a common default choice, but a future improvement would be to make these parameters configurable.
 
 {{< /admonition >}}
 
 ## Examples
 
-To get the basic idea, we start with a simple example. We have a dataframe with two columns, `id` and `values`. We group by `id` and compute the kde for the `values` column.
-We work with a fixed set of evaluation points, which are the points at which the kde is evaluated.
+To get the basic idea, we start with a simple example. We have a dataframe with two columns, `id` and `values`. We group by `id` and compute the kde for the `values` column. We work with a fixed set of evaluation points, which are the points at which the kde is evaluated.
 
 ``` python
 import polars as pl
@@ -139,8 +183,8 @@ print(df_kde)
     │ --- ┆ ---                             │
     │ u32 ┆ list[f32]                       │
     ╞═════╪═════════════════════════════════╡
-    │ 0   ┆ [1.816287, 2.407217, … 1.1300e… │
     │ 1   ┆ [1.7249e-11, 0.000002, … 0.000… │
+    │ 0   ┆ [1.816287, 2.407217, … 1.1300e… │
     └─────┴─────────────────────────────────┘
 
 Now lets generate some more data and add a visualization:
@@ -197,8 +241,7 @@ aggregations.
 
 ## Speed
 
-Especially, for large dataframes and many groups, the speedup is significant. Compared to the `scipy` implementation, the `polars_kde` is faster even for a single operation faster.
-For illustration, let us look at some boilerplate code that can be used to generate more benchmarks.
+Especially, for large dataframes and many groups, the speedup is significant. Compared to the `scipy` implementation, the `polars_kde` is faster even for a single operation faster. For illustration, let us look at some boilerplate code that can be used to generate more benchmarks.
 
 ``` python
 import numpy as np
@@ -226,19 +269,6 @@ def benchmark(n_groups, n_rows):
       .agg(
         kde = pk.kde("values", eval_points = eval_points),
       )
-      .with_columns(
-          eval_points=pl.lit(eval_points)
-      )
-      .explode("kde", "eval_points")
-    )
-
-    start = time.time()
-    df_kde = (
-       df
-      .group_by("id")
-      .agg(
-        kde = pk.kde("values", eval_points = eval_points),
-      )
     )
     end = time.time()
 
@@ -251,17 +281,19 @@ def benchmark(n_groups, n_rows):
     return df_bench
 
 bench_n_groups = [1, 10, 100, 1000]
-bench_n_rows = [10_000, 100_000, 500_000, 1_000_000]
+bench_n_rows = [10_000, 100_000, 500_000, 1_000_000, 2_000_000, 5_000_000]
 
-df_bench = pl.concat([
-    benchmark(n_groups, n_rows)
-    for n_groups in bench_n_groups
-    for n_rows in bench_n_rows
-])
 # Include this to generate the plot.
 # Here, I added the output on my local machine with 8 cores,
 # since the build agent is single core and we would not see
 # any parallelization.
+
+# df_bench = pl.concat([
+#     benchmark(n_groups, n_rows)
+#     for n_groups in bench_n_groups
+#     for n_rows in bench_n_rows
+# ])
+
 
 # sns.catplot(
 #     df_bench,
@@ -272,7 +304,4 @@ df_bench = pl.concat([
 # )
 ```
 
-<figure>
-<img src="catplot.png" alt="Catplot" />
-<figcaption aria-hidden="true">Catplot</figcaption>
-</figure>
+{{< figure src="benchmark.png" title="Benchmark on 8 cores." >}}

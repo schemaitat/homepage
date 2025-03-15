@@ -21,3 +21,5 @@ hugo.linux
 __pycache__
 __marimo__
 
+.jupyter_cache
+
