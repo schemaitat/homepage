@@ -54,5 +54,14 @@ pipeline{
                 '''
             }
         }
+
+        stage("Add marimo wasm files to public"){
+            steps{
+                sh '''#!/bin/bash
+                chmod +x ./scripts/install_marimo_notebooks.sh
+                ./scripts/install_marimo_notebooks.sh"
+                '''
+            }
+        }
     }        
 }

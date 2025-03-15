@@ -17,3 +17,7 @@ hugo.linux
 .vscode
 
 /.quarto/
+
+__pycache__
+__marimo__
+

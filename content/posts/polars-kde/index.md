@@ -60,6 +60,13 @@ The final notebook looks like this:
 <figcaption aria-hidden="true">Marimo Notebook</figcaption>
 </figure>
 
+Or as an interactive marimo notebook (loading the packages can take a few second):
+
+{{< admonition type="example" title="Interactive Marimo Notebook" >}}
+<iframe src="/marimo/feature_drift/index.html" width="100%" height="700" frameborder="0">
+</iframe>
+{{< /admonition >}}
+
 ## Rust side
 
 On the rust side of things, all we need to to is wrapping an already existing functionality into a polars expression.
@@ -211,19 +218,6 @@ def benchmark(n_groups, n_rows):
     })
 
     eval_points = [x/100 for x in range(-50, 50)]
-
-    start = time.time()
-    df_kde = (
-       df
-      .group_by("id")
-      .agg(
-        kde = pk.kde("values", eval_points = eval_points),
-      )
-      .with_columns(
-          eval_points=pl.lit(eval_points)
-      )
-      .explode("kde", "eval_points")
-    )
 
     start = time.time()
     df_kde = (

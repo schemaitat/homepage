@@ -32,6 +32,7 @@ Some advertisement: If you haven't already checked out my other polars plugin [p
 The plugin enables **very** fast approximate joins on string columns (fuzzy matching but with a twist). The implementation is entirely written from scratch in Rus and uses n-gram vectorization of strings with a fast cosine similarity computation using sparse matrices.
 {{< /admonition >}}
 
+
 ## Introduction
 
 Kernel Density Estimation (KDE) is a non-parametric way to estimate the probability density function of a random variable. I recently created a basic [marimo](https://marimo.app/) notebook on how to visualize feature distributions 
@@ -51,6 +52,19 @@ uv tool run marimo edit https://github.com/schemaitat/marimo_notebooks/blob/main
 The final notebook looks like this:
 
 ![Marimo Notebook](marimo_notebook_screenshot.png)
+
+Or as an interactive marimo notebook (loading the packages can take a few second):
+
+{{< admonition type="example" title="Interactive Marimo Notebook" >}}
+
+<iframe 
+  src="/marimo/feature_drift/index.html"
+  width="100%"
+  height="700"
+  frameborder="0"
+></iframe>
+
+{{< /admonition >}}
 
 ## Rust side
 
