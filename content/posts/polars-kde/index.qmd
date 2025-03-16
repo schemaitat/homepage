@@ -32,20 +32,20 @@ By now, the standard reference for writing polars plugins is Marco Gorelli's exc
 
 {{< admonition tip >}}
 Some advertisement: If you haven't already checked out my other polars plugin [polars_sim](https://github.com/schemaitat/polars_sim), make sure to have a look.
-The plugin enables **very** fast approximate joins on string columns (fuzzy matching but with a twist). The implementation is entirely written from scratch in Rus and uses n-gram vectorization of strings with a fast cosine similarity computation using sparse matrices.
+The plugin enables **very** fast approximate joins on string columns (fuzzy matching but with a twist). The implementation is entirely written from scratch in Rust and uses n-gram vectorization of strings with a fast cosine similarity computation using sparse matrices.
 {{< /admonition >}}
 
 ## Introduction
 
 Kernel Density Estimation (KDE) is a non-parametric way to estimate the probability density function of a random variable. I recently created a basic [marimo](https://marimo.app/) notebook on how to visualize feature distributions and drift over time, possibly grouped by another categorical variable, e.g. the target of a classifier. See my repository [marimo_notebooks](https://github.com/schemaitat/marimo_notebooks) for more details or check out the interactive notebook [here](https://marimo.app/gh/schemaitat/marimo_notebooks/main?entrypoint=notebook%2Ffeature_drift.py).
 
-While working on this notebook, I realized that the computations usually involve multiple kde's for different slices of the data. In order to have a polars built-in method to compute kde's, I created the `polars_kde` package. This enables optimized comutations and polars-native code (as opposed to for example using `scipy`).
+While working on this notebook, I realized that the computations usually involve multiple kde's for different slices of the data. In order to have a polars built-in method to compute kde's, I created the `polars_kde` package. This enables optimized computations and polars-native code (as opposed to for example using `scipy`).
 
 The updated notebook with the new polars plugin in place can be found [here](https://github.com/schemaitat/marimo_notebooks/blob/main/notebook/feature_drift_fast.py).
 
-If you (trust me) and want to run the notebook in your local environment, simpliy fire
+If you (trust me) and want to run the notebook in your local environment, simply fire
 
-``` bash
+```bash
 uv tool run marimo edit https://github.com/schemaitat/marimo_notebooks/blob/main/notebook/feature_drift_fast.py
 ```
 
@@ -70,7 +70,7 @@ Adding interactive marimo notebooks to a static blog is as easy as adding an ifr
 
 I integrated this into my workflow by adding a `marimo` folder containing all the notebooks. Then, each notebook is exported to a same named folder in the `public` folder (where the rendered blog html lives).
 
-In my Jenkins pipline, I *install* the notebooks as follows:
+In my Jenkins pipeline, I *install* the notebooks as follows:
 
 ```bash
 #!/bin/bash
@@ -110,7 +110,7 @@ trap "rm -rf $mytmpdir" EXIT SIGINT SIGTERM SIGQUIT SIGKILL
 
 ## Rust side
 
-On the rust side of things, all we need to do is wrapping an already existing functionality into a polars expression. Often, this is the standard approach on how to create polars plugins. Onother example is for example the [polars-reverse-geocode](https://github.com/MarcoGorelli/polars-reverse-geocode) plugin.
+On the rust side of things, all we need to do is wrapping an already existing functionality into a polars expression. Often, this is the standard approach on how to create polars plugins. Another example is for example the [polars-reverse-geocode](https://github.com/MarcoGorelli/polars-reverse-geocode) plugin.
 
 ``` rust
 use kernel_density_estimation::prelude::*;
@@ -214,7 +214,7 @@ sns.lineplot(
 See also the Readme of the [polars_kde](https://github.com/schemaitat/polars_kde) for some more examples on varying evaluation points.
 
 {{< admonition note >}}
-The `kde` function works also on `group_by_dyanmic` groups and is particularly useful for timeseries
+The `kde` function works also on `group_by_dynamic` groups and is particularly useful for timeseries
 aggregations.
 {{< /admonition >}}
 
