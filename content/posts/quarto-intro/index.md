@@ -1,4 +1,5 @@
 ---
+featuredImage: featured-image.png
 title: Hello, quarto.
 date: '2024-05-30'
 categories:
@@ -12,6 +13,7 @@ tags:
   - python
 draft: false
 ---
+featuredImage: featured-image.png
 
 
 <meta name="mermaid-theme" content="forest"/>

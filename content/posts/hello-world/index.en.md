@@ -1,4 +1,5 @@
 ---
+featuredImage: featured-image.png
 title: "Hello, World !"
 date: 2022-03-22T17:55:28+08:00
 draft: false
@@ -9,6 +10,7 @@ tags: ["hello world"]
 categories: ["general"]
 
 ---
+featuredImage: featured-image.png
 As part of my new webpage I decided to start a blog about things I find interesting, that I recently learned and my old and still active passion, mathematics.
 
 I will start off by giving an end-to-end tutorial on how to  set up a webpage like this. 

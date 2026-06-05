@@ -1,4 +1,5 @@
 ---
+featuredImage: featured-image.png
 title: "Kubernetes as a service & Argo CD"
 date: 2022-12-31T09:55:28+08:00
 draft: false
@@ -9,6 +10,7 @@ toc: true
 tags: ["tutorial", "linode", "provisioning", "argo", "cd", "kubernetes"]
 categories: ["tutorial", "kubernetes", "dev-ops"]
 ---
+featuredImage: featured-image.png
 
 {{< admonition abstract >}}
 **Things you get**

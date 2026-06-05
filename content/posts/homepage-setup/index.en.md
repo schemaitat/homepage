@@ -1,4 +1,5 @@
 ---
+featuredImage: featured-image.png
 title: "Building a homepage from scratch."
 date: 2022-05-16T17:55:28+08:00
 draft: false
@@ -9,6 +10,7 @@ tags: ["jenkins","nginx","hugo","tutorial","homepage"]
 categories: ["tutorial", "webserver"]
 
 ---
+featuredImage: featured-image.png
 In this article, we go through the basic steps to create a fully customizable homepage using nginx, jenkins and hugo.
 <!--more-->
 
