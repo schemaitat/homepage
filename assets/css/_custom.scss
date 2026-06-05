@@ -1,0 +1,219 @@
+// ==============================
+// Homepage layout revisions
+// ==============================
+
+// Shared section title
+.section-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: $global-font-secondary-color;
+  border-bottom: 2px solid $global-border-color;
+  padding-bottom: 0.4rem;
+  margin: 2rem 0 1rem;
+
+  [theme=dark] & {
+    color: $global-font-secondary-color-dark;
+    border-bottom-color: $global-border-color-dark;
+  }
+}
+
+// Bio / intro
+.home-bio {
+  max-width: 680px;
+  margin: 1.5rem auto 0;
+  padding: 0 1rem;
+  text-align: left;
+
+  .bio-content p {
+    margin: 0.5rem 0;
+    line-height: 1.7;
+    color: $global-font-color;
+    font-size: 0.975rem;
+
+    [theme=dark] & {
+      color: $global-font-color-dark;
+    }
+  }
+}
+
+// Skills grid
+.home-skills {
+  margin: 0 0 1rem;
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1rem;
+  }
+
+  .skill-category-name {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: $global-font-secondary-color;
+    margin: 0 0 0.5rem;
+
+    [theme=dark] & {
+      color: $global-font-secondary-color-dark;
+    }
+  }
+
+  .skill-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .skill-tag {
+    font-size: 0.78rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: 2rem;
+    border: 1px solid $global-border-color;
+    color: $global-font-secondary-color;
+    background: transparent;
+
+    [theme=dark] & {
+      border-color: $global-border-color-dark;
+      color: $global-font-secondary-color-dark;
+    }
+  }
+}
+
+// Featured projects grid
+.home-projects {
+  margin: 0 0 1rem;
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+
+  .project-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid $global-border-color;
+    border-radius: 6px;
+    padding: 1rem 1.1rem;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+
+    [theme=dark] & {
+      border-color: $global-border-color-dark;
+    }
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
+
+      [theme=dark] & {
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+      }
+    }
+  }
+
+  .project-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin: 0 0 0.3rem;
+    line-height: 1.4;
+
+    a {
+      color: $global-font-color;
+      text-decoration: none;
+
+      [theme=dark] & {
+        color: $global-font-color-dark;
+      }
+
+      &:hover {
+        color: $global-link-hover-color;
+      }
+    }
+  }
+
+  .project-venue {
+    font-size: 0.78rem;
+    color: $global-font-secondary-color;
+    margin: 0 0 0.5rem;
+
+    [theme=dark] & {
+      color: $global-font-secondary-color-dark;
+    }
+  }
+
+  .project-description {
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: $global-font-secondary-color;
+    margin: 0;
+
+    [theme=dark] & {
+      color: $global-font-secondary-color-dark;
+    }
+  }
+
+  .project-card-footer {
+    margin-top: 0.75rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+  }
+
+  .project-tag {
+    font-size: 0.72rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 2rem;
+    background: $global-border-color;
+    color: $global-font-secondary-color;
+
+    [theme=dark] & {
+      background: $global-border-color-dark;
+      color: $global-font-secondary-color-dark;
+    }
+  }
+}
+
+// Posts section header
+.home-posts {
+  margin-top: 0.5rem;
+}
+
+// Posts card grid (replaces vertical list)
+.posts-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+
+  // Override the theme's dashed border on each summary card
+  .summary {
+    border-bottom: none !important;
+    border: 1px solid $global-border-color;
+    border-radius: 6px;
+    padding: 1rem 1.1rem !important;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+
+    [theme=dark] & {
+      border-color: $global-border-color-dark;
+    }
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
+
+      [theme=dark] & {
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+      }
+    }
+
+    .single-title {
+      font-size: 1rem !important;
+    }
+  }
+}

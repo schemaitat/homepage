@@ -1,0 +1,26 @@
+{{- $projects := site.Data.projects -}}
+{{- with $projects.featured -}}
+<section class="home-projects">
+    <h2 class="section-title">Featured Projects &amp; Publications</h2>
+    <div class="projects-grid">
+        {{- range . -}}
+        <article class="project-card">
+            <div class="project-card-body">
+                <h3 class="project-title">
+                    <a href="{{ .url }}"{{ if hasPrefix .url "http" }} rel="noopener noreferrer" target="_blank"{{ end }}>
+                        {{ .title }}
+                    </a>
+                </h3>
+                <p class="project-venue">{{ .venue }}</p>
+                <p class="project-description">{{ .description }}</p>
+            </div>
+            <div class="project-card-footer">
+                {{- range .tags -}}
+                <span class="project-tag">{{ . }}</span>
+                {{- end -}}
+            </div>
+        </article>
+        {{- end -}}
+    </div>
+</section>
+{{- end -}}

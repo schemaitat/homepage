@@ -1,0 +1,25 @@
+categories:
+  - name: Mathematics
+    items:
+      - C*-algebras
+      - K-theory
+      - Non-commutative geometry
+      - Functional analysis
+  - name: Data Science & ML
+    items:
+      - Python
+      - Machine learning
+      - Last-mile delivery optimization
+      - Feature drift analysis
+  - name: Engineering
+    items:
+      - Kubernetes
+      - OpenShift
+      - Cloud (AWS/Azure)
+      - Linux & automation
+  - name: Languages
+    items:
+      - Python
+      - Julia
+      - Rust
+      - Go
