@@ -10,9 +10,13 @@
         {{- $image = .RelPermalink -}}
     {{- end -}}
     {{- with $image -}}
+        {{- $src := . -}}
+        {{- with dict "Path" . "Resources" $.Resources | partial "function/resource.html" -}}
+            {{- $src = .RelPermalink -}}
+        {{- end -}}
         <div class="featured-image-preview">
             <a href="{{ $.RelPermalink }}">
-                {{- dict "Src" . "Title" $.Description "Resources" $.Resources | partial "plugin/img.html" -}}
+                <img src="{{ $src }}" alt="{{ $.Title }}" loading="lazy" />
             </a>
         </div>
     {{- end -}}
@@ -24,8 +28,8 @@
 
     {{- /* Meta */ -}}
     <div class="post-meta">
-        {{- $author := $params.author | default .Site.Params.author.name | default (T "author") -}}
-        {{- $authorLink := $params.authorlink | default .Site.Params.author.link | default .Site.Home.RelPermalink -}}
+        {{- $author := $params.author | default .Site.Params.authorName | default (T "author") -}}
+        {{- $authorLink := $params.authorlink | default .Site.Home.RelPermalink -}}
         <span class="post-author">
             {{- $options := dict "Class" "author" "Destination" $authorLink "Title" "Author" "Rel" "author" "Icon" (dict "Class" "fas fa-user-circle fa-fw") "Content" $author -}}
             {{- partial "plugin/a.html" $options -}}
@@ -46,15 +50,6 @@
             &nbsp;<span class="post-category">
                 {{- dict "Categories" . | T "includedInCategories" | safeHTML -}}
             </span>
-        {{- end -}}
-    </div>
-
-    {{- /* Summary content */ -}}
-    <div class="content">
-        {{- with .Summary -}}
-            {{- dict "Content" . "Ruby" $params.ruby "Fraction" $params.fraction "Fontawesome" $params.fontawesome | partial "function/content.html" | safeHTML -}}
-        {{- else -}}
-            {{- .Description | safeHTML -}}
         {{- end -}}
     </div>
 

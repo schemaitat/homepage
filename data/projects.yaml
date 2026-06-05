@@ -1,0 +1,16 @@
+featured:
+  - title: "The Jiang-Su algebra is strongly self-absorbing revisited"
+    description: "A new proof that the Jiang-Su algebra is strongly self-absorbing, with applications to the classification program for nuclear C*-algebras."
+    url: "https://doi.org/10.1016/j.jfa.2021.109347"
+    venue: "Journal of Functional Analysis, 2021"
+    tags: ["C*-algebras", "K-theory", "Mathematics"]
+  - title: "Algebraic K-theory and a semi-finite Fuglede-Kadison determinant"
+    description: "Defines a Fuglede-Kadison determinant for semi-finite von Neumann algebras using algebraic K-theory and studies its properties."
+    url: "https://msp.org/akt/2018/3-2/p02.xhtml"
+    venue: "Annals of K-Theory 3-2, 2018"
+    tags: ["K-theory", "von Neumann algebras", "Mathematics"]
+  - title: "Feature Drift Analysis"
+    description: "Interactive Marimo notebook for monitoring and visualizing feature drift in machine learning production pipelines."
+    url: "/notebooks/feature_drift"
+    venue: "Personal project"
+    tags: ["Python", "Machine learning", "Data Science"]

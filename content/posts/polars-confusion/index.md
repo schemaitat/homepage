@@ -1,4 +1,5 @@
 ---
+featuredImage: featured-image.png
 title: Polars confusion
 date: '2024-07-13'
 categories:
@@ -15,6 +16,7 @@ tags:
   - optimization
 draft: false
 ---
+featuredImage: featured-image.png
 
 
 {{< admonition abstract >}}

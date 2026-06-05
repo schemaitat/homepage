@@ -26,7 +26,7 @@ rm uv.tar.gz
 export HUGO_RELEASE=0.162.1
 
 curl -o hugo.tar.gz -L \
-    https://github.com/gohugoio/hugo/releases/download/v${HUGO_RELEASE}/hugo_extended_${HUGO_RELEASE}_Linux-64bit.tar.gz
+    https://github.com/gohugoio/hugo/releases/download/v${HUGO_RELEASE}/hugo_extended_${HUGO_RELEASE}_linux-amd64.tar.gz
 tar -zxvf hugo.tar.gz -C ${HOME}/bin
 rm hugo.tar.gz
 

@@ -21,9 +21,9 @@ enableEmoji = true
   [languages.en]
     weight = 1
     # language code
-    languageCode = "en"
+    locale = "en"
     # language name
-    languageName = "English"
+    label = "English"
     # default amount of posts in each pages
     paginate = 12
     # copyright description used only for seo schema
@@ -207,6 +207,8 @@ enableEmoji = true
 [params]
   # LoveIt theme version
   version = "0.2.X"
+  # author name used in SEO structured data
+  authorName = "Dr. André Schemaitat"
   # site default theme ("light", "dark", "auto")
   defaultTheme = "light"
   # public git repo url only then enableGitInfo is true
@@ -573,7 +575,7 @@ enableEmoji = true
 
 # Permalinks config (https://gohugo.io/content-management/urls/#permalinks)
 [Permalinks]
-  # posts = ":year/:month/:filename"
+  # posts = ":year/:month/:contentbasename"
   posts = ":contentbasename"
 
 # Privacy config (https://gohugo.io/about/hugo-and-gdpr/)

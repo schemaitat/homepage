@@ -1,4 +1,5 @@
 ---
+featuredImage: featured-image.png
 title: "Backpropagation."
 date: 2022-07-03T17:55:28+08:00
 draft: true
@@ -9,6 +10,7 @@ toc: false
 tags: ["machine learning", "derivatives", "math", "backpropagation", "neural nets"]
 categories: ["math", "general"]
 ---
+featuredImage: featured-image.png
 
 # Notation 
 

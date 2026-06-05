@@ -1,4 +1,5 @@
 ---
+featuredImage: featured-image.png
 title: Reproducible development setup
 date: 2024-05-18T00:00:00.000Z
 draft: false
@@ -16,6 +17,7 @@ categories:
   - tutorial
   - linux
 ---
+featuredImage: featured-image.png
 
 
 {{< admonition abstract >}}

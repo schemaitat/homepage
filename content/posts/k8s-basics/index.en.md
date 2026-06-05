@@ -1,4 +1,5 @@
 ---
+featuredImage: featured-image.png
 title: "Kubernetes basics"
 date: 2022-12-24T13:04:28+08:00
 lastmod: 2022-12-24T13:04:28+08:00
@@ -9,6 +10,7 @@ description: "An introduction to kubernetes."
 tags: ["k8s", "kubernetes", "cluster", "deployment", "nginx", "linode" ]
 categories: ["cloud", "kubernetes"]
 ---
+featuredImage: featured-image.png
 # introduction
 
 In this post, we will set up a Kubernetes cluster with [Linode](https://www.linode.com/) and deploy a dummpy webpage.
