@@ -16,7 +16,6 @@ tags:
   - optimization
 draft: false
 ---
-featuredImage: featured-image.png
 
 
 {{< admonition abstract >}}

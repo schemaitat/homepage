@@ -17,7 +17,6 @@ categories:
   - tutorial
   - linux
 ---
-featuredImage: featured-image.png
 
 
 {{< admonition abstract >}}

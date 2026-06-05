@@ -13,7 +13,6 @@ tags:
   - python
 draft: false
 ---
-featuredImage: featured-image.png
 
 
 <meta name="mermaid-theme" content="forest"/>
