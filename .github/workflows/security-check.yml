@@ -1,0 +1,116 @@
+name: Security Check
+
+on:
+  schedule:
+    - cron: '0 8 * * 1'  # Every Monday at 08:00 UTC
+  workflow_dispatch:
+
+jobs:
+  external:
+    name: TLS and HTTP headers
+    runs-on: ubuntu-latest
+    steps:
+      - name: TLS certificate expiry
+        run: |
+          expiry=$(echo | openssl s_client -connect schemaitat.de:443 -servername schemaitat.de 2>/dev/null \
+            | openssl x509 -noout -enddate | cut -d= -f2)
+          echo "Certificate expires: $expiry"
+          days=$(( ( $(date -d "$expiry" +%s) - $(date +%s) ) / 86400 ))
+          echo "Days until expiry: $days"
+          [ "$days" -ge 14 ] || { echo "FAIL: certificate expires in $days days"; exit 1; }
+
+      - name: HTTP redirects to HTTPS
+        run: |
+          code=$(curl -s -o /dev/null -w "%{http_code}" http://schemaitat.de)
+          [ "$code" = "301" ] || { echo "FAIL: expected 301, got $code"; exit 1; }
+          echo "OK: HTTP -> HTTPS redirect ($code)"
+
+      - name: Security headers present
+        run: |
+          headers=$(curl -sI https://schemaitat.de)
+          echo "$headers"
+          fail=0
+          for header in \
+            "X-Frame-Options" \
+            "X-Content-Type-Options" \
+            "Referrer-Policy" \
+            "X-XSS-Protection" \
+            "Permissions-Policy"; do
+            echo "$headers" | grep -qi "^${header}:" \
+              || { echo "MISSING: $header"; fail=1; }
+          done
+          [ $fail -eq 0 ] || exit 1
+
+      - name: Nginx does not expose version
+        run: |
+          server=$(curl -sI https://schemaitat.de | grep -i "^Server:" | tr -d '\r')
+          echo "Server header: $server"
+          echo "$server" | grep -qiE "nginx/[0-9]" \
+            && { echo "FAIL: nginx version exposed in Server header"; exit 1; } || true
+          echo "OK: version not exposed"
+
+  server:
+    name: Server hardening
+    runs-on: ubuntu-latest
+    env:
+      DEPLOY_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+      DEPLOY_HOST: ${{ vars.DEPLOY_HOST }}
+      DEPLOY_USER: ${{ vars.DEPLOY_USER }}
+    steps:
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "$DEPLOY_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts
+
+      - name: SSH hardening
+        run: |
+          ssh -i ~/.ssh/deploy_key "${DEPLOY_USER}@${DEPLOY_HOST}" bash <<'EOF'
+          set -e
+          fail=0
+
+          pwauth=$(sshd -T 2>/dev/null | grep "^passwordauthentication " | awk '{print $2}')
+          [ "$pwauth" = "no" ] || { echo "FAIL: PasswordAuthentication is '$pwauth', expected 'no'"; fail=1; }
+          echo "OK: PasswordAuthentication $pwauth"
+
+          rootlogin=$(sshd -T 2>/dev/null | grep "^permitrootlogin " | awk '{print $2}')
+          echo "INFO: PermitRootLogin $rootlogin"
+
+          exit $fail
+          EOF
+
+      - name: Firewall active
+        run: |
+          ssh -i ~/.ssh/deploy_key "${DEPLOY_USER}@${DEPLOY_HOST}" bash <<'EOF'
+          ufw status | grep -q "Status: active" \
+            || { echo "FAIL: ufw is not active"; exit 1; }
+          echo "OK: ufw active"
+          ufw status numbered
+          EOF
+
+      - name: No unexpected public ports
+        run: |
+          ssh -i ~/.ssh/deploy_key "${DEPLOY_USER}@${DEPLOY_HOST}" bash <<'EOF'
+          unexpected=$(ss -tlnp | awk 'NR>1 {print $4}' \
+            | grep -v -E '(127\.|::1)' \
+            | grep -v -E ':(22|80|443)$' || true)
+          if [ -n "$unexpected" ]; then
+            echo "WARN: unexpected public-facing ports:"
+            echo "$unexpected"
+          else
+            echo "OK: only ports 22, 80, 443 are publicly reachable"
+          fi
+          EOF
+
+      - name: Pending security updates
+        run: |
+          ssh -i ~/.ssh/deploy_key "${DEPLOY_USER}@${DEPLOY_HOST}" bash <<'EOF'
+          count=$(apt-get -s upgrade 2>/dev/null | grep -c "^Inst.*security" || true)
+          if [ "$count" -gt 0 ]; then
+            echo "WARN: $count pending security update(s)"
+            apt-get -s upgrade 2>/dev/null | grep "^Inst.*security"
+          else
+            echo "OK: no pending security updates"
+          fi
+          EOF
