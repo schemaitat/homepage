@@ -51,10 +51,14 @@ systemctl enable --now nginx
 sed -i 's|root /var/www/html;|root /usr/share/nginx/html;|' /etc/nginx/sites-enabled/default
 nginx -t && systemctl reload nginx
 
-# 3. (Optional) TLS via Let's Encrypt
+# 3. TLS via Let's Encrypt
 apt install -y certbot python3-certbot-nginx
-certbot --nginx -d schemaitat.de
+certbot --nginx -d schemaitat.de --non-interactive --agree-tos -m <your-email>
+# certbot installs a systemd timer for automatic renewal
 ```
+
+# 4. Open firewall ports
+ufw allow 'Nginx Full' && ufw allow OpenSSH && ufw enable
 
 SSH access uses the key at `~/.ssh/homepage/id_ed25519`. To connect:
 
