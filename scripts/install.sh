@@ -3,7 +3,7 @@ rm -rf ${HOME}/bin
 mkdir -p ${HOME}/bin
 
 # install quarto
-export QUARTO_VERSION=1.6.42
+export QUARTO_VERSION=1.9.38
 curl -o quarto.tar.gz -L \
     "https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/quarto-${QUARTO_VERSION}-linux-amd64.tar.gz"
 tar -zxvf quarto.tar.gz \
@@ -12,7 +12,7 @@ tar -zxvf quarto.tar.gz \
 rm quarto.tar.gz
 
 # install uv
-export UV_RELEASE=0.6.6
+export UV_RELEASE=0.11.19
 
 curl -o uv.tar.gz -L \
     "https://github.com/astral-sh/uv/releases/download/${UV_RELEASE}/uv-x86_64-unknown-linux-gnu.tar.gz"

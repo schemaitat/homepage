@@ -3,20 +3,20 @@ name = "homepage"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.13"
 dependencies = [
-    "altair>=5.5.0",
+    "altair>=6.1.0",
     "jupyter-cache>=1.0.1",
-    "marimo>=0.11.20",
-    "matplotlib>=3.10.1",
-    "notebook>=7.3.2",
-    "numpy>=2.2.3",
-    "pandas>=2.2.3",
-    "pandera>=0.23.1",
-    "plotly>=6.0.0",
+    "marimo>=0.23.9",
+    "matplotlib>=3.10.9",
+    "notebook>=7.5.7",
+    "numpy>=2.4.6",
+    "pandas>=3.0.3",
+    "pandera>=0.31.1",
+    "plotly>=6.8.0",
     "plotly-express>=0.4.1",
-    "polars>=1.24.0",
+    "polars>=1.41.2",
     "polars-kde==0.1.4",
-    "pyarrow>=19.0.1",
+    "pyarrow>=24.0.0",
     "seaborn>=0.13.2",
 ]

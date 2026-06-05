@@ -26,8 +26,6 @@ enableEmoji = true
     label = "English"
     # default amount of posts in each pages
     paginate = 12
-    # [UA-XXXXXXXX-X] google analytics code
-    googleAnalytics = ""
     # copyright description used only for seo schema
     copyright = "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License."
     # Menu config
@@ -564,7 +562,7 @@ enableEmoji = true
     endLevel = 6
 
 # Author config
-[author]
+[params.author]
   name = "André"
   email = "a.schemaitat@gmail.com"
   link = ""
@@ -608,6 +606,6 @@ enableEmoji = true
   page = ["HTML", "MarkDown"]
   section = ["HTML", "RSS"]
   taxonomy = ["HTML", "RSS"]
-  taxonomy = ["HTML"]
+  term = ["HTML"]
 
 
