@@ -13,12 +13,13 @@ Personal homepage built with [Hugo](https://gohugo.io) and [Quarto](https://quar
 
 ## CI/CD
 
-Two workflows live in `.github/workflows/`:
+Three workflows live in `.github/workflows/`:
 
 | Workflow | Trigger | What it does |
 |---|---|---|
 | `pr.yml` | Pull request targeting `main` | Full build (Quarto + Hugo + Marimo), no deploy |
 | `deploy.yml` | Push to `main` | Full build + rsync to server |
+| `security-check.yml` | Every Monday 08:00 UTC / manual | TLS, headers, SSH hardening, open ports |
 
 ### Required GitHub secrets and variables
 
@@ -51,14 +52,31 @@ systemctl enable --now nginx
 sed -i 's|root /var/www/html;|root /usr/share/nginx/html;|' /etc/nginx/sites-enabled/default
 nginx -t && systemctl reload nginx
 
-# 3. TLS via Let's Encrypt
+# 3. Open firewall ports
+ufw allow 'Nginx Full' && ufw allow OpenSSH && ufw enable
+
+# 4. TLS via Let's Encrypt
 apt install -y certbot python3-certbot-nginx
 certbot --nginx -d schemaitat.de --non-interactive --agree-tos -m <your-email>
 # certbot installs a systemd timer for automatic renewal
-```
 
-# 4. Open firewall ports
-ufw allow 'Nginx Full' && ufw allow OpenSSH && ufw enable
+# 5. Security headers — write snippet then include it in nginx.conf http block
+cat > /etc/nginx/snippets/security-headers.conf <<'EOF'
+add_header X-Frame-Options "SAMEORIGIN" always;
+add_header X-Content-Type-Options "nosniff" always;
+add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+add_header X-XSS-Protection "1; mode=block" always;
+add_header Permissions-Policy "geolocation=(), microphone=(), camera=()" always;
+EOF
+# add inside the http { } block in /etc/nginx/nginx.conf:
+#   include /etc/nginx/snippets/security-headers.conf;
+# also set: server_tokens off;
+nginx -t && systemctl reload nginx
+
+# 6. Disable SSH password authentication
+echo 'PasswordAuthentication no' > /etc/ssh/sshd_config.d/99-hardening.conf
+sshd -t && systemctl reload ssh
+```
 
 SSH access uses the key at `~/.ssh/homepage/id_ed25519`. To connect:
 
