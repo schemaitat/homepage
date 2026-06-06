@@ -1,4 +1,5 @@
 ---
+featuredImage: featured-image.png
 title: "Reproducible development setup"
 date: 2024-05-18
 draft: false
