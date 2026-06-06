@@ -12,7 +12,7 @@ tags:
   - optimization
   - eda
 draft: false
-featuredImage: featured.png
+featuredImage: featured-image.png
 execute:
   cache: true
 ---
