@@ -87,9 +87,8 @@ just ssh
 ## Local development
 
 ```bash
-# Preview Hugo site with drafts
-make serve
-
-# Preview Quarto output
-make prev
+just dev    # Hugo dev server with drafts
+just prev   # Quarto preview
+just build  # full local build (quarto render + hugo)
+just gen-images [--force]  # generate AI featured images
 ```
