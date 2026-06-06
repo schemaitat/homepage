@@ -1,11 +1,10 @@
 {{- $skills := hugo.Data.skills -}}
 {{- with $skills.categories -}}
 <section class="home-skills">
-    <h2 class="section-title">Skills</h2>
     <div class="skills-grid">
         {{- range . -}}
         <div class="skill-category">
-            <h3 class="skill-category-name">{{ .name }}</h3>
+            <span class="skill-category-name">{{ .name }}</span>
             <ul class="skill-list">
                 {{- range .items -}}
                 <li class="skill-tag">{{ . }}</li>
