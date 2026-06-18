@@ -28,4 +28,4 @@ jobs:
           rsync -avz --delete \
             -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes" \
             public/ \
-            "${DEPLOY_USER}@${DEPLOY_HOST}:/usr/share/nginx/html/"
+            "${DEPLOY_USER}@${DEPLOY_HOST}:/var/www/schemaitat.de/"
